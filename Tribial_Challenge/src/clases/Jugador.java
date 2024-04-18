@@ -37,6 +37,21 @@ public class Jugador {
 		return Objects.equals(nombre, other.nombre);
 	}
 
+
+ public void imprimirInformacion() {
+	 
+	 System.out.println(toString());
+	 
+ }
+	
+	
+
+	@Override
+	public String toString() {
+		return "Jugador: [ "+ nombre + "]";
+	}
+
+	
 	
 
 	
