@@ -20,6 +20,7 @@ public class Jugador {
 	public Jugador(String nombreJugador) {
 		super();
 		this.nombre = nombreJugador;
+		comprobarNombreJugador();
 
 	}
 	/**
@@ -75,10 +76,13 @@ public class Jugador {
 				System.out.println("Nombre invadilo.");
 				System.out.println("El nombre de los jugadores humanos no pueden contener numeros.");
 
+			}else {
+				System.out.println("Nombre valido.");
 			}
-			System.out.println("Nombre valido.");
-
+			
+			contador++;
 		}
+		
 
 	}
 

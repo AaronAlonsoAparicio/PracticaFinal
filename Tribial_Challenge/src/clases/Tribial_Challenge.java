@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 import constantes.ConstantesJugador;
 
-
 /**
  * Practica tercer trimestre, programa principal.
  * 
@@ -60,23 +59,7 @@ public class Tribial_Challenge {
 				break;
 
 			case 3:
-				System.out.println("Has entrado en Eliminar Jugador." );
-				System.out.println("¿Desea continuar? (Si/No)");
-				String continuar = teclado.next();
-				if(continuar.equalsIgnoreCase("Si")) {
-					System.out.println("¿Que jugador deseas eliminar?");
-				for (Jugador jugador : jugadores) {
-					jugador.imprimirInformacion();
-				}
-				String jugadorAEliminar = teclado.next();
-					
-				}
-				
-				
-				
-				
-				
-				
+				casoTresJugadores();
 
 				break;
 
@@ -90,9 +73,31 @@ public class Tribial_Challenge {
 			}
 		} while (opcion != 5);
 	}
-	
-	
-	
+
+	private static void casoTresJugadores() {
+		System.out.println("Has entrado en Eliminar Jugador.");
+		System.out.println("¿Desea continuar? (Si/No)");
+		String continuar = teclado.next();
+		if (continuar.equalsIgnoreCase("Si")) {
+			System.out.println("¿Que jugador deseas eliminar?");
+			for (Jugador jugador : jugadores) {
+				jugador.imprimirInformacion();
+			}
+			String jugador = teclado.next();
+			if (jugadores.contains(jugador)) {
+
+				int jugadorAEliminar = jugadores.indexOf(jugador);
+				jugadores.remove(jugadorAEliminar);
+				System.out.println("Jugador eliminado con exito");
+				for (Jugador jugadoresRestantes : jugadores) {
+					jugadoresRestantes.imprimirInformacion();
+
+				}
+
+			}
+		}
+	}
+
 	/**
 	 * Metodo del caso 1 del menu de los jugadores.
 	 * 
@@ -113,12 +118,14 @@ public class Tribial_Challenge {
 
 	/**
 	 * Metodo del caso dos del menu de los jugadores
+	 * 
 	 * @param nuevoJugador
 	 * @since 1.0
 	 * 
 	 */
-	
+
 	private static void casoDosJugadores(Jugador nuevoJugador) {
+	
 		if (!jugadores.contains(nuevoJugador)) {
 			System.out.println("Registrado correctamente.");
 			jugadores.add(nuevoJugador);
@@ -146,6 +153,7 @@ public class Tribial_Challenge {
 			}
 
 		}
+		
 	}
 
 	/**
@@ -206,7 +214,7 @@ public class Tribial_Challenge {
 		System.out.println("Y con " + jugadoresMaquina + " jugadores maquina");
 		int numJugadores = jugadoresHumanos + jugadoresMaquina;
 		System.out.println("Hoy van a particiar " + numJugadores + "jugadores demoles la bienvenida.");
-		
+
 	}
 
 }
