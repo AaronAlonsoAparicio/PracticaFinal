@@ -21,13 +21,12 @@ public class Tribial_Challenge {
 
 		presentacionPrograma();
 		opcionesPrograma();
-		menuJugadores();
+		
 
 	}
 
 	/**
 	 * Menu de las opciones propias que tienen los jugadores
-	 * 
 	 * @since 1.0
 	 */
 	private static void menuJugadores() {
@@ -39,6 +38,18 @@ public class Tribial_Challenge {
 		System.out.println("Que deseas hacer ahora:");
 		System.out.println("Antes de hacer nada dinos tu nombre para poder identificarte");
 		String nombre = teclado.next();
+		opcionesJugadores(nombre);
+		
+		
+	}
+	
+	/**
+	 * Opciones del menu propio de los jugadores.
+	 * @param nombre indicamos el nombre del jugador a registrarse
+	 */
+
+	private static void opcionesJugadores(String nombre) {
+		int opcion;
 		do {
 
 			Jugador nuevoJugador = new Jugador(nombre);
@@ -74,6 +85,11 @@ public class Tribial_Challenge {
 		} while (opcion != 5);
 	}
 
+	
+	/**
+	 * Metodo por el cual eliminamos a jugadores, opcion 3 del menu de los jugadores.
+	 * @since 1.0
+	 */
 	private static void casoTresJugadores() {
 		System.out.println("Has entrado en Eliminar Jugador.");
 		System.out.println("¿Desea continuar? (Si/No)");
@@ -115,6 +131,8 @@ public class Tribial_Challenge {
 
 		}
 	}
+	
+	
 
 	/**
 	 * Metodo del caso dos del menu de los jugadores
@@ -125,15 +143,31 @@ public class Tribial_Challenge {
 	 */
 
 	private static void casoDosJugadores(Jugador nuevoJugador) {
+		
+		if(nuevoJugador.comprobarNombreJugador() != true) {
 	
-		if (!jugadores.contains(nuevoJugador)) {
+		if (!jugadores.contains(nuevoJugador) && nuevoJugador.comprobarNombreJugador() != true) {
 			System.out.println("Registrado correctamente.");
 			jugadores.add(nuevoJugador);
 
 		} else {
 			System.out.println("Ha habido algun problema con su identificacion.");
 		}
+		anaydirNuevoJugador();
+		
+		}else {
+			System.out.println("No se ha podido añadir el " + nuevoJugador);
+		}
+	
+		
+	}
+	
+	/**
+	 * Metodo para añadir un nuevo jugador
+	 * @since 1.0
+	 */
 
+	private static void anaydirNuevoJugador() {
 		System.out.println("¿Quieres añadir un nuevo jugador?");
 		System.out.println("(Si/No)");
 		String registrar = teclado.next();
@@ -142,18 +176,17 @@ public class Tribial_Challenge {
 			System.out.println("¿Dime el nombre del nuevo jugador?");
 			String nombreJugador = teclado.next();
 			Jugador anaydirNuevoJugador = new Jugador(nombreJugador);
-			if (!jugadores.contains(anaydirNuevoJugador)) {
+			if (!jugadores.contains(anaydirNuevoJugador) && anaydirNuevoJugador.comprobarNombreJugador() != true) {
 				System.out.println("Añadido correctamente el jugador: " + nombreJugador);
 				jugadores.add(anaydirNuevoJugador);
 
 			} else {
-				System.out.println("Jugador ya existente en el sistema.");
+				System.out.println("Jugador ya existente en el sistema o nombre incorrecto");
 				System.out.println("Tendra que eliminar el jugador " + nombreJugador + " para poder registrarse.");
 
 			}
 
 		}
-		
 	}
 
 	/**
@@ -162,7 +195,9 @@ public class Tribial_Challenge {
 	 * @since 1.0
 	 */
 	private static void opcionesPrograma() {
+		int opcionElegida;
 		teclado = new Scanner(System.in);
+		do {
 		System.out.println("¿Qué quieres hacer?");
 		System.out.println("Podemos elegir entre:");
 		System.out.println("1) Jugar Partida.");
@@ -172,7 +207,7 @@ public class Tribial_Challenge {
 		System.out.println("5) Salir.");
 
 		System.out.println("¿Que deseas hacer?");
-		int opcionElegida = teclado.nextInt();
+		opcionElegida= teclado.nextInt();
 		switch (opcionElegida) {
 		case 1:
 
@@ -186,6 +221,7 @@ public class Tribial_Challenge {
 			break;
 
 		case 4:
+			menuJugadores();
 
 			break;
 
@@ -193,7 +229,9 @@ public class Tribial_Challenge {
 		default:
 			System.out.println("Hasta la proxima.");
 			break;
-		}
+		} 
+		}while (opcionElegida != 5);
+		
 	}
 
 	/**

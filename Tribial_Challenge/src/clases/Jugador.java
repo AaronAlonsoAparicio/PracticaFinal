@@ -68,20 +68,24 @@ public class Jugador {
 
 	/**
 	 * Metodo que no comprueba que el nombre del jugador esta correctamente formado.
+	 * @return truen si el nombre esta correctamente formado, false si tiene algo invalido.
 	 */
-	public void comprobarNombreJugador() {
+	public boolean comprobarNombreJugador() {
 		int contador = 0;
 		while (contador < this.nombre.length()) {
 			if (!Character.isLetter(this.nombre.charAt(contador))) {
 				System.out.println("Nombre invadilo.");
 				System.out.println("El nombre de los jugadores humanos no pueden contener numeros.");
+				return false;
 
-			}else {
-				System.out.println("Nombre valido.");
 			}
+			
 			
 			contador++;
 		}
+		
+		System.out.println("Nombre valido.");
+		return false;
 		
 
 	}
