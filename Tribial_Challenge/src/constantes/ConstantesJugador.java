@@ -1,7 +1,7 @@
 package constantes;
 
-public class constantesPartida {
-	
+public class ConstantesJugador {
 	public static final int  MAX_JUGADORES = 4;
+
 
 }

@@ -1,8 +1,11 @@
 package clases;
 
 import java.util.ArrayList;
+
 import java.util.Scanner;
-import constantes.constantesPartida;
+
+import constantes.ConstantesJugador;
+
 
 /**
  * Practica tercer trimestre, programa principal.
@@ -57,7 +60,17 @@ public class Tribial_Challenge {
 				break;
 
 			case 3:
-				
+				System.out.println("Has entrado en Eliminar Jugador." );
+				System.out.println("¿Desea continuar? (Si/No)");
+				String continuar = teclado.next();
+				if(continuar.equalsIgnoreCase("Si")) {
+					System.out.println("¿Que jugador deseas eliminar?");
+				for (Jugador jugador : jugadores) {
+					jugador.imprimirInformacion();
+				}
+				String jugadorAEliminar = teclado.next();
+					
+				}
 				
 				
 				
@@ -189,7 +202,7 @@ public class Tribial_Challenge {
 		teclado = new Scanner(System.in);
 		int jugadoresHumanos = teclado.nextInt();
 		System.out.println("En el dia a de hoy van a participar " + jugadoresHumanos + " jugador/es");
-		int jugadoresMaquina = constantesPartida.MAX_JUGADORES - jugadoresHumanos;
+		int jugadoresMaquina = ConstantesJugador.MAX_JUGADORES - jugadoresHumanos;
 		System.out.println("Y con " + jugadoresMaquina + " jugadores maquina");
 		int numJugadores = jugadoresHumanos + jugadoresMaquina;
 		System.out.println("Hoy van a particiar " + numJugadores + "jugadores demoles la bienvenida.");
