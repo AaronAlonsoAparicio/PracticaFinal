@@ -20,7 +20,6 @@ public class Jugador {
 	public Jugador(String nombreJugador) {
 		super();
 		this.nombre = nombreJugador;
-		comprobarNombreJugador();
 
 	}
 	/**
@@ -85,7 +84,7 @@ public class Jugador {
 		}
 		
 		System.out.println("Nombre valido.");
-		return false;
+		return true;
 		
 
 	}

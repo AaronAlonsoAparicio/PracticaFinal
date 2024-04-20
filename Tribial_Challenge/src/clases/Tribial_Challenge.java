@@ -100,17 +100,11 @@ public class Tribial_Challenge {
 				jugador.imprimirInformacion();
 			}
 			String jugador = teclado.next();
-			if (jugadores.contains(jugador)) {
-
-				int jugadorAEliminar = jugadores.indexOf(jugador);
-				jugadores.remove(jugadorAEliminar);
+				jugadores.remove(jugador);
 				System.out.println("Jugador eliminado con exito");
-				for (Jugador jugadoresRestantes : jugadores) {
-					jugadoresRestantes.imprimirInformacion();
+			
 
-				}
-
-			}
+			
 		}
 	}
 
@@ -144,9 +138,9 @@ public class Tribial_Challenge {
 
 	private static void casoDosJugadores(Jugador nuevoJugador) {
 		
-		if(nuevoJugador.comprobarNombreJugador() != true) {
+		if(nuevoJugador.comprobarNombreJugador() == true) {
 	
-		if (!jugadores.contains(nuevoJugador) && nuevoJugador.comprobarNombreJugador() != true) {
+		if (!jugadores.contains(nuevoJugador)) {
 			System.out.println("Registrado correctamente.");
 			jugadores.add(nuevoJugador);
 
@@ -176,7 +170,7 @@ public class Tribial_Challenge {
 			System.out.println("¿Dime el nombre del nuevo jugador?");
 			String nombreJugador = teclado.next();
 			Jugador anaydirNuevoJugador = new Jugador(nombreJugador);
-			if (!jugadores.contains(anaydirNuevoJugador) && anaydirNuevoJugador.comprobarNombreJugador() != true) {
+			if (!jugadores.contains(anaydirNuevoJugador)) {
 				System.out.println("Añadido correctamente el jugador: " + nombreJugador);
 				jugadores.add(anaydirNuevoJugador);
 
@@ -244,14 +238,14 @@ public class Tribial_Challenge {
 		System.out.println("*** TRIBIAL CHALLENGE ***");
 		System.out.println("     Acierta y gana    ");
 		System.out.println("Un programa prensentado por Aaron Alonso.");
-		System.out.println("¿Cuantos jugadores humanos van a participar?");
+		System.out.println("¿Cuantos jugadores van a participar?");
 		teclado = new Scanner(System.in);
 		int jugadoresHumanos = teclado.nextInt();
 		System.out.println("En el dia a de hoy van a participar " + jugadoresHumanos + " jugador/es");
 		int jugadoresMaquina = ConstantesJugador.MAX_JUGADORES - jugadoresHumanos;
 		System.out.println("Y con " + jugadoresMaquina + " jugadores maquina");
 		int numJugadores = jugadoresHumanos + jugadoresMaquina;
-		System.out.println("Hoy van a particiar " + numJugadores + "jugadores demoles la bienvenida.");
+		System.out.println("Hoy van a particiar " + numJugadores + " jugadores demoles la bienvenida.");
 
 	}
 
