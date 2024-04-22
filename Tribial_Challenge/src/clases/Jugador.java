@@ -15,6 +15,7 @@ public class Jugador {
 
 	/**
 	 * Contructor de los objetos de Jugador.
+	 * 
 	 * @param nombreJugador
 	 */
 	public Jugador(String nombreJugador) {
@@ -23,8 +24,10 @@ public class Jugador {
 		comprobarNombreJugador();
 
 	}
+
 	/**
 	 * Clase que nos dice el nombre de los jugadores.
+	 * 
 	 * @return nombre del Jugador
 	 */
 
@@ -68,7 +71,9 @@ public class Jugador {
 
 	/**
 	 * Metodo que no comprueba que el nombre del jugador esta correctamente formado.
-	 * @return truen si el nombre esta correctamente formado, false si tiene algo invalido.
+	 * 
+	 * @return truen si el nombre esta correctamente formado, false si tiene algo
+	 *         invalido.
 	 */
 	public boolean comprobarNombreJugador() {
 		int contador = 0;
@@ -79,14 +84,12 @@ public class Jugador {
 				return false;
 
 			}
-			
-			
+
 			contador++;
 		}
-		
+
 		System.out.println("Nombre valido.");
 		return false;
-		
 
 	}
 

@@ -1,16 +1,19 @@
 package clases;
 
+import java.io.BufferedReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Random;
 
 import constantes.ConstantesPreguntas;
+import constantes.ConstantesRutas;
 
 /**
  * Clase que define los atributos y metodos de las preguntas del programa.
  */
 public class Pregunta {
+	
 	private int numeroPregunta;
 
 	public int getTipoPregunta() {
@@ -42,8 +45,21 @@ public class Pregunta {
 		} else if (tipoPregunta == ConstantesPreguntas.PREGUNTA_LENGUA) {
 
 		} else {
-
-			Path rutaArchivoInlges = Paths.get("./../../materiales/ingles.txt");
+			Path rutaArchivoInlges = Paths.get(ConstantesRutas.archivoPreguntasIngles);
+			int lineaInicial;
+			int lineaFinal;
+			
+			try (BufferedReader extractorPreguntasIngles = Files.newBufferedReader(rutaArchivoInlges);){
+				
+				
+				
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			
+			
+			
 
 		}
 
