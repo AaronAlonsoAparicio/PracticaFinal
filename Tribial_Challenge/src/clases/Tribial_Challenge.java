@@ -20,13 +20,12 @@ public class Tribial_Challenge {
 	public static void main(String[] args) {
 
 		presentacionPrograma();
-		opcionesPrograma();
-		
 
 	}
 
 	/**
 	 * Menu de las opciones propias que tienen los jugadores
+	 * 
 	 * @since 1.0
 	 */
 	private static void menuJugadores() {
@@ -39,12 +38,12 @@ public class Tribial_Challenge {
 		System.out.println("Antes de hacer nada dinos tu nombre para poder identificarte");
 		String nombre = teclado.next();
 		opcionesJugadores(nombre);
-		
-		
+
 	}
-	
+
 	/**
 	 * Opciones del menu propio de los jugadores.
+	 * 
 	 * @param nombre indicamos el nombre del jugador a registrarse
 	 */
 
@@ -85,9 +84,10 @@ public class Tribial_Challenge {
 		} while (opcion != 5);
 	}
 
-	
 	/**
-	 * Metodo por el cual eliminamos a jugadores, opcion 3 del menu de los jugadores.
+	 * Metodo por el cual eliminamos a jugadores, opcion 3 del menu de los
+	 * jugadores.
+	 * 
 	 * @since 1.0
 	 */
 	private static void casoTresJugadores() {
@@ -131,8 +131,6 @@ public class Tribial_Challenge {
 
 		}
 	}
-	
-	
 
 	/**
 	 * Metodo del caso dos del menu de los jugadores
@@ -143,27 +141,27 @@ public class Tribial_Challenge {
 	 */
 
 	private static void casoDosJugadores(Jugador nuevoJugador) {
-		
-		if(nuevoJugador.comprobarNombreJugador() != true) {
-	
-		if (!jugadores.contains(nuevoJugador) && nuevoJugador.comprobarNombreJugador() != true) {
-			System.out.println("Registrado correctamente.");
-			jugadores.add(nuevoJugador);
+
+		if (nuevoJugador.comprobarNombreJugador() != true) {
+
+			if (!jugadores.contains(nuevoJugador) && nuevoJugador.comprobarNombreJugador() != true) {
+				System.out.println("Registrado correctamente.");
+				jugadores.add(nuevoJugador);
+
+			} else {
+				System.out.println("Ha habido algun problema con su identificacion.");
+			}
+			anaydirNuevoJugador();
 
 		} else {
-			System.out.println("Ha habido algun problema con su identificacion.");
-		}
-		anaydirNuevoJugador();
-		
-		}else {
 			System.out.println("No se ha podido añadir el " + nuevoJugador);
 		}
-	
-		
+
 	}
-	
+
 	/**
 	 * Metodo para añadir un nuevo jugador
+	 * 
 	 * @since 1.0
 	 */
 
@@ -198,40 +196,40 @@ public class Tribial_Challenge {
 		int opcionElegida;
 		teclado = new Scanner(System.in);
 		do {
-		System.out.println("¿Qué quieres hacer?");
-		System.out.println("Podemos elegir entre:");
-		System.out.println("1) Jugar Partida.");
-		System.out.println("2) Ranking.");
-		System.out.println("3) Historial.");
-		System.out.println("4) Jugadores.");
-		System.out.println("5) Salir.");
+			System.out.println("¿Qué quieres hacer?");
+			System.out.println("Podemos elegir entre:");
+			System.out.println("1) Jugar Partida.");
+			System.out.println("2) Ranking.");
+			System.out.println("3) Historial.");
+			System.out.println("4) Jugadores.");
+			System.out.println("5) Salir.");
 
-		System.out.println("¿Que deseas hacer?");
-		opcionElegida= teclado.nextInt();
-		switch (opcionElegida) {
-		case 1:
+			System.out.println("¿Que deseas hacer?");
+			opcionElegida = teclado.nextInt();
+			switch (opcionElegida) {
+			case 1:
 
-			break;
+				break;
 
-		case 2:
+			case 2:
 
-			break;
-		case 3:
+				break;
+			case 3:
 
-			break;
+				break;
 
-		case 4:
-			menuJugadores();
+			case 4:
+				menuJugadores();
 
-			break;
+				break;
 
-		case 5:
-		default:
-			System.out.println("Hasta la proxima.");
-			break;
-		} 
-		}while (opcionElegida != 5);
-		
+			case 5:
+			default:
+				System.out.println("Hasta la proxima.");
+				break;
+			}
+		} while (opcionElegida != 5);
+
 	}
 
 	/**
@@ -246,12 +244,24 @@ public class Tribial_Challenge {
 		System.out.println("Un programa prensentado por Aaron Alonso.");
 		System.out.println("¿Cuantos jugadores humanos van a participar?");
 		teclado = new Scanner(System.in);
-		int jugadoresHumanos = teclado.nextInt();
-		System.out.println("En el dia a de hoy van a participar " + jugadoresHumanos + " jugador/es");
-		int jugadoresMaquina = ConstantesJugador.MAX_JUGADORES - jugadoresHumanos;
-		System.out.println("Y con " + jugadoresMaquina + " jugadores maquina");
-		int numJugadores = jugadoresHumanos + jugadoresMaquina;
-		System.out.println("Hoy van a particiar " + numJugadores + "jugadores demoles la bienvenida.");
+		int jugadoresHumanos;
+		do {
+			jugadoresHumanos = teclado.nextInt();
+
+			if (jugadoresHumanos < 4) {
+				System.out.println("En el dia a de hoy van a participar " + jugadoresHumanos + " jugador/es");
+				int jugadoresMaquina = ConstantesJugador.MAX_JUGADORES - jugadoresHumanos;
+				System.out.println("Y con " + jugadoresMaquina + " jugadores maquina");
+				int numJugadores = jugadoresHumanos + jugadoresMaquina;
+				System.out.println("Hoy van a particiar " + numJugadores + "jugadores demoles la bienvenida.");
+				opcionesPrograma();
+
+			} else {
+				System.out.println(
+						"El maximo de jugadores no puede superar los " + ConstantesJugador.MAX_JUGADORES + ".");
+
+			}
+		} while (jugadoresHumanos != ConstantesJugador.MAX_JUGADORES);
 
 	}
 
