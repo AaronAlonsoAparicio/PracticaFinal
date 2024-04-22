@@ -1,5 +1,7 @@
 package clases;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Random;
 
 import constantes.ConstantesPreguntas;
@@ -8,11 +10,11 @@ import constantes.ConstantesPreguntas;
  * Clase que define los atributos y metodos de las preguntas del programa.
  */
 public class Pregunta {
-	private int tipoPregunta;
+	private int numeroPregunta;
 	
 	
 	public int getTipoPregunta() {
-		return tipoPregunta;
+		return numeroPregunta;
 	}
 	
 	
@@ -41,6 +43,9 @@ public class Pregunta {
 		}else if(tipoPregunta == ConstantesPreguntas.PREGUNTA_LENGUA){
 			
 		}else {
+			
+			Path rutaArchivoInlges = Paths.get("./../../materiales/ingles.txt");
+			
 			
 			
 			
