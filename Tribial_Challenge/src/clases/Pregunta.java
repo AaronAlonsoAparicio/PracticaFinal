@@ -1,16 +1,13 @@
 package clases;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.FileSystemAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-
+import java.util.Scanner;
+import java.util.Set;
 import constantes.ConstantesPreguntas;
 import constantes.ConstantesRutas;
 import excepciones.ExcepcionesFicheros;
@@ -25,7 +22,6 @@ public class Pregunta {
 	public int getTipoPregunta() {
 		return numeroPregunta;
 	}
-
 	static List<String> lineasDiccionario = null;
 
 	/**
@@ -41,22 +37,23 @@ public class Pregunta {
 
 	/**
 	 * Metodo que nos va a generar las preguntas del programa.
-	 * 
-	 * 
-	 * @throws ExcepcionesFicheros
-	 * @throws IOException
-	 * 
+	 *
 	 */
 	public static void generarPreguntas() throws IOException {
 		int tipoPregunta = preguntas();
 		if (tipoPregunta == ConstantesPreguntas.PREGUNTA_MATES) {
 
 		} else if (tipoPregunta == ConstantesPreguntas.PREGUNTA_LENGUA) {
-			Random palabraAleatoria = new Random();
-			int palabraEscogida = palabraAleatoria.nextInt(lineasMaximasDiccionario() + 1);
-			// TODO: ocultar letras de la palabra obtenida.
-			String palabraAUsar = lineasDiccionario.get(palabraEscogida);
-			System.out.println(palabraAUsar);
+			System.out.println("PREGUNTA DE LENGUA");
+			System.out.print("Te damos esta palabra: ");
+			preguntasDeLengua();
+			System.out.println("Ahora tienes que adivinar la palabra completa para sumar puntos.");
+			System.out.println("¿De qué palabra crees que se trata?");
+			Scanner palabraAdivinada = new Scanner(System.in);
+			String palabraPropuestaUsuario = palabraAdivinada.next();
+			
+
+			
 
 		} else {
 			Path rutaArchivoInlges = Paths.get(ConstantesRutas.archivoPreguntasIngles);
@@ -64,6 +61,19 @@ public class Pregunta {
 			int lineaFinal;
 		}
 
+	}
+	
+	/**
+	 * Código que genera las preguntas de Lengua
+	 * @since 1.1
+	 */
+	
+	public static void preguntasDeLengua() {
+		Random palabraAleatoria = new Random();
+		int palabraEscogida = palabraAleatoria.nextInt(lineasMaximasDiccionario() + 1);
+		String palabraAUsar = lineasDiccionario.get(palabraEscogida);
+		String palabraOculta = ocultarLetras(palabraAUsar);
+		System.out.print(palabraOculta);
 	}
 
 	/**
@@ -94,6 +104,28 @@ public class Pregunta {
 
 	}
 
+	/**
+	 * Metodo para ocultar las letras de la palabra escogida del diccionario.
+	 * 
+	 * @param palabraAdivinar Palabra del diccionario escogida para ocultar el x
+	 *                        numeros de letras.
+	 * @return caracterAOcultar La palabra con las letras ocultas
+	 */
+	public static String ocultarLetras(String palabraAdivinar) {
+		Random letraAleatroriaAOcultar = new Random();
+		char[] caracterAOcultar = palabraAdivinar.toCharArray();
+		int cantidadALetrasOcultar = palabraAdivinar.length() / 3;
+		Set<Integer> posicionesOcultas = new HashSet<>();
+		while (posicionesOcultas.size() < cantidadALetrasOcultar) {
+			int posicionLetaOculta = letraAleatroriaAOcultar.nextInt(palabraAdivinar.length());
+			posicionesOcultas.add(posicionLetaOculta);
+		}
+		for (int posicionLetraOculta : posicionesOcultas) {
+			caracterAOcultar[posicionLetraOculta] = '*';
+		}
+		return new String(caracterAOcultar);
+	}
+	
 	public static void main(String[] args) throws IOException {
 		generarPreguntas();
 	}
