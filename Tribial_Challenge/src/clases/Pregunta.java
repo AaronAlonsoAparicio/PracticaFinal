@@ -8,6 +8,7 @@ import java.nio.file.FileSystemAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Random;
 
 import constantes.ConstantesPreguntas;
@@ -25,6 +26,8 @@ public class Pregunta {
 		return numeroPregunta;
 	}
 
+	static List<String> lineasDiccionario = null;
+
 	/**
 	 * Metodo que nos genera un numero aleatorio del 1 al 3
 	 * 
@@ -39,19 +42,21 @@ public class Pregunta {
 	/**
 	 * Metodo que nos va a generar las preguntas del programa.
 	 * 
-	 * @param tipoPregunta unos da un numero conrrespondinte a cada tipo de
-	 *                     pregunta.
+	 * 
 	 * @throws ExcepcionesFicheros
 	 * @throws IOException
 	 * 
 	 */
-	public static void generarPreguntas(int tipoPregunta) throws IOException {
-		tipoPregunta = preguntas();
+	public static void generarPreguntas() throws IOException {
+		int tipoPregunta = preguntas();
 		if (tipoPregunta == ConstantesPreguntas.PREGUNTA_MATES) {
 
 		} else if (tipoPregunta == ConstantesPreguntas.PREGUNTA_LENGUA) {
 			Random palabraAleatoria = new Random();
-//			int palabraEscogida = palabraAleatoria.nextInt(linasMaximasDiccionario(rutaArchivoDiccionario) + 1);
+			int palabraEscogida = palabraAleatoria.nextInt(lineasMaximasDiccionario() + 1);
+			// TODO: ocultar letras de la palabra obtenida.
+			String palabraAUsar = lineasDiccionario.get(palabraEscogida);
+			System.out.println(palabraAUsar);
 
 		} else {
 			Path rutaArchivoInlges = Paths.get(ConstantesRutas.archivoPreguntasIngles);
@@ -64,11 +69,33 @@ public class Pregunta {
 	/**
 	 * Metodo que nos cuenta el número de líneas que tiene el fichero diccionario.tx
 	 * 
-	 * @param archivoDiccionario Fichero al cual le vamos a contar las líneas.
-	 * @return numeroTotalDeLineas
+	 * @return lineasDiccionario Número total de lineas del archivo diccionario.txt
 	 * @throws ExcepcionesFicheros Errores relacionados con los ficheros.
 	 */
-	public static int linasMaximasDiccionario(String archivoDiccionario) throws IOException {
+
+	public static int lineasMaximasDiccionario() {
+		Path archivoDiccionario = Paths.get(ConstantesRutas.archivoDiccionario);
+
+		if (!Files.exists(archivoDiccionario)) {
+			System.out.println("El archivo en la ruta " + ConstantesRutas.archivoDiccionario
+					+ " no existe o no se encuentra en este directorio.");
+
+		} else {
+			try {
+				lineasDiccionario = Files.readAllLines(archivoDiccionario);
+
+			} catch (IOException errorFicheros) {
+
+				errorFicheros.printStackTrace();
+			}
+
+		}
+		return lineasDiccionario.size();
 
 	}
+
+	public static void main(String[] args) throws IOException {
+		generarPreguntas();
+	}
+
 }
