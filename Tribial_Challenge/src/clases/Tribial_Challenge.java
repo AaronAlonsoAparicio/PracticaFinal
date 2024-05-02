@@ -1,5 +1,6 @@
 package clases;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import java.util.Scanner;
@@ -17,7 +18,7 @@ public class Tribial_Challenge {
 	static Scanner teclado;
 	static ArrayList<Jugador> jugadores;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
 		presentacionPrograma();
 		opcionesPrograma();
@@ -27,9 +28,10 @@ public class Tribial_Challenge {
 
 	/**
 	 * Menu de las opciones propias que tienen los jugadores
+	 * @throws IOException 
 	 * @since 1.0
 	 */
-	private static void menuJugadores() {
+	private static void menuJugadores() throws IOException {
 		jugadores = new ArrayList<Jugador>();
 		int opcion;
 
@@ -46,9 +48,10 @@ public class Tribial_Challenge {
 	/**
 	 * Opciones del menu propio de los jugadores.
 	 * @param nombre indicamos el nombre del jugador a registrarse
+	 * @throws IOException 
 	 */
 
-	private static void opcionesJugadores(String nombre) {
+	private static void opcionesJugadores(String nombre) throws IOException {
 		int opcion;
 		do {
 
@@ -185,10 +188,11 @@ public class Tribial_Challenge {
 
 	/**
 	 * Creamo el menu de opciones principal que vamos a usar en el programa.
+	 * @throws IOException 
 	 * 
 	 * @since 1.0
 	 */
-	private static void opcionesPrograma() {
+	private static void opcionesPrograma() throws IOException {
 		int opcionElegida;
 		teclado = new Scanner(System.in);
 		do {
@@ -204,7 +208,7 @@ public class Tribial_Challenge {
 		opcionElegida= teclado.nextInt();
 		switch (opcionElegida) {
 		case 1:
-
+			Pregunta.generarPreguntas();
 			break;
 
 		case 2:
