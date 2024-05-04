@@ -2,6 +2,8 @@ package clases;
 
 import java.util.Objects;
 
+import constantes.ConstantesJugador;
+
 /**
  * Clase que nos define las funcionalidades y caracteristicas de los jugadores.
  * 
@@ -12,6 +14,9 @@ import java.util.Objects;
 public class Jugador {
 
 	private String nombre;
+	private  int puntuacion = ConstantesJugador.PUNTUACION_INICIAL;
+	
+	
 
 	/**
 	 * Contructor de los objetos de Jugador.
@@ -22,15 +27,24 @@ public class Jugador {
 		this.nombre = nombreJugador;
 
 	}
+	
+	
 	/**
 	 * Clase que nos dice el nombre de los jugadores.
 	 * @return nombre del Jugador
 	 */
 
+	public int getPuntuacion() {
+		return puntuacion;
+	}
 	public String getNombre() {
 		return nombre;
 	}
 
+	public void sumarPunto(int puntos) {
+        this.puntuacion += puntos;  
+    }
+	
 	/**
 	 * Metodo que nos comprueba mediente el nombre del jugador si ya hay uno igual.
 	 * 
@@ -62,7 +76,7 @@ public class Jugador {
 
 	@Override
 	public String toString() {
-		return "Jugador: [" + nombre + "]";
+		return "Jugador:" + nombre +"["+ puntuacion +"]";
 	}
 
 	/**

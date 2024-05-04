@@ -17,6 +17,10 @@ import constantes.ConstantesJugador;
 public class Tribial_Challenge {
 	static Scanner teclado;
 	static ArrayList<Jugador> jugadores;
+	
+	public static ArrayList<Jugador> getJugadores() {
+	    return jugadores;
+	}
 
 	public static void main(String[] args) throws IOException {
 
@@ -99,14 +103,20 @@ public class Tribial_Challenge {
 		String continuar = teclado.next();
 		if (continuar.equalsIgnoreCase("Si")) {
 			System.out.println("¿Que jugador deseas eliminar?");
+			int jugadorAEliminar = 0;
 			for (Jugador jugador : jugadores) {
-				jugador.imprimirInformacion();
+				System.out.println(jugadorAEliminar + ". " + jugador.getNombre());
+				jugadorAEliminar++;
 			}
-			String jugador = teclado.next();
-				jugadores.remove(jugador);
+			int jugadrorEliminado = teclado.nextInt();
+			if(jugadrorEliminado >= 0 && jugadrorEliminado < jugadores.size()) {
+				jugadores.remove(jugadrorEliminado);
 				System.out.println("Jugador eliminado con exito");
-			
-
+				
+			}else {
+				System.out.println("Jugador no encontrado.");
+				
+			}
 			
 		}
 	}
@@ -208,6 +218,11 @@ public class Tribial_Challenge {
 		opcionElegida= teclado.nextInt();
 		switch (opcionElegida) {
 		case 1:
+			
+			
+			
+			
+			
 			Pregunta.generarPreguntas();
 			break;
 
@@ -249,8 +264,10 @@ public class Tribial_Challenge {
 		int jugadoresMaquina = ConstantesJugador.MAX_JUGADORES - jugadoresHumanos;
 		System.out.println("Y con " + jugadoresMaquina + " jugadores maquina");
 		int numJugadores = jugadoresHumanos + jugadoresMaquina;
-		System.out.println("Hoy van a particiar " + numJugadores + " jugadores demoles la bienvenida.");
+	
 
 	}
+	
+	
 
 }

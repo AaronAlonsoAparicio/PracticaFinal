@@ -23,10 +23,8 @@ import constantes.ConstantesRutas;
  */
 public class Pregunta {
 
-
 	private int numeroPregunta;
 
-	
 	static Scanner respuesta;
 
 	static List<String> lineasDiccionario = null;
@@ -48,113 +46,129 @@ public class Pregunta {
 	 *
 	 */
 	public static void generarPreguntas() throws IOException {
+
 		int tipoPregunta = preguntas();
+
 		if (tipoPregunta == ConstantesPreguntas.PREGUNTA_MATES) {
 			matematicas(); // genera las preguntas de matematicas
 
 		} else if (tipoPregunta == ConstantesPreguntas.PREGUNTA_LENGUA) {
-			lengua(); // Genera las preguntas de lengua
+			if (lengua()) {
+
+			}
 
 		} else {
-			ingles(); //Genera las preguntas de ingles
-		
+			ingles(); // Genera las preguntas de ingles
 
 		}
 	}
 
-	
-	//Empezamos con las preguntas de matematicas
+	// Empezamos con las preguntas de matematicas
 	/**
 	 * Estructura de las preguntas de matematicas
 	 */
-	private static void matematicas() {
+	private static boolean matematicas() {
 		System.out.println("PREGUNTA DE MATEMATICAS");
 		System.out.println("Dada esta expresion matematica ¿Podrias decirme cual es el resultado?");
 		String operacionAresolver = expresionMatematica(4, 8);
 		System.out.println(operacionAresolver);
-		
+
 		Expression expresionMatematica = new ExpressionBuilder(operacionAresolver).build();
-		//La solucion solo puede ser un numero entero para la simpleza del resultado
+		// La solucion solo puede ser un numero entero para la simpleza del resultado
 		int resultadoOperacion = (int) expresionMatematica.evaluate();
-		//System.out.println(resultadoOperacion);
+		// System.out.println(resultadoOperacion);
 		System.out.println("¿Cúal es el resultado de la operacion?");
 		respuesta = new Scanner(System.in);
 		int resultadoUsuario = respuesta.nextInt();
 		if (resultadoUsuario == resultadoOperacion) {
 			System.out.println("Enhorabuena, la respuesta es correcta + 1 punto ");
-			
-		}else {
+			return true;
+
+		} else {
 			System.out.println("Buen intento, la proxima seguro que lo adivinas");
+			return false;
 		}
 	}
-	
+
 	/**
 	 * Generamos las expresiones matematicas que el juegador va a tener que resolver
-	 * @param minimoOperadores                Numero minimo de numeros que se van a usar
-	 * @param maximoOperadores				  Numero maximo de numeros que se van a usar
-	 * @return expresionGenerada              Nos devulve las expresion matematica
+	 * 
+	 * @param minimoOperadores Numero minimo de numeros que se van a usar
+	 * @param maximoOperadores Numero maximo de numeros que se van a usar
+	 * @return expresionGenerada Nos devulve las expresion matematica
 	 */
 	private static String expresionMatematica(int minimoOperadores, int maximoOperadores) {
-	    Random objetosAleatorios = new Random();
-	    int numeroDeOperadores = objetosAleatorios.nextInt(maximoOperadores - minimoOperadores + 1) + minimoOperadores;
-	    int numerosValidosParaOperacion = objetosAleatorios.nextInt(11) + 2; // Números de la operación serán del 2 al 12
+		Random objetosAleatorios = new Random();
+		int numeroDeOperadores = objetosAleatorios.nextInt(maximoOperadores - minimoOperadores + 1) + minimoOperadores;
+		int numerosValidosParaOperacion = objetosAleatorios.nextInt(11) + 2; // Números de la operación serán del 2 al
+																				// 12
 
-	    // Inicializamos la expresión con el primer número
-	    String expresionGenerada = Integer.toString(numerosValidosParaOperacion);
+		// Inicializamos la expresión con el primer número
+		String expresionGenerada = Integer.toString(numerosValidosParaOperacion);
 
-	    String[] operadoresMatematicos = {
-	        ConstantesExpresionesMatematicas.EXPRESION_SUMA,
-	        ConstantesExpresionesMatematicas.EXPRESION_RESTA,
-	        ConstantesExpresionesMatematicas.EXPRESION_MULTIPLICACION
-	    };
-	    String ultimoOperadorUtilizado = "";
+		String[] operadoresMatematicos = { ConstantesExpresionesMatematicas.EXPRESION_SUMA,
+				ConstantesExpresionesMatematicas.EXPRESION_RESTA,
+				ConstantesExpresionesMatematicas.EXPRESION_MULTIPLICACION };
+		String ultimoOperadorUtilizado = "";
 
-	    for (int contador = 0; contador < numeroDeOperadores; contador++) {
-	        // Elegimos un operado aleatorio para empezar la expresion matematica
-	        String operador = operadoresMatematicos[objetosAleatorios.nextInt(operadoresMatematicos.length)];
+		for (int contador = 0; contador < numeroDeOperadores; contador++) {
+			// Elegimos un operado aleatorio para empezar la expresion matematica
+			String operador = operadoresMatematicos[objetosAleatorios.nextInt(operadoresMatematicos.length)];
 
-	        // No puede haber dos multiplicaciones seguidas
-	        while (ultimoOperadorUtilizado.equals(ConstantesExpresionesMatematicas.EXPRESION_MULTIPLICACION) && operador.equals(ConstantesExpresionesMatematicas.EXPRESION_MULTIPLICACION)) {
-	            operador = operadoresMatematicos[objetosAleatorios.nextInt(operadoresMatematicos.length)];
-	        }
+			// No puede haber dos multiplicaciones seguidas
+			while (ultimoOperadorUtilizado.equals(ConstantesExpresionesMatematicas.EXPRESION_MULTIPLICACION)
+					&& operador.equals(ConstantesExpresionesMatematicas.EXPRESION_MULTIPLICACION)) {
+				operador = operadoresMatematicos[objetosAleatorios.nextInt(operadoresMatematicos.length)];
+			}
 
-	        int siguienteNumero = objetosAleatorios.nextInt(11) + 2;
-	        expresionGenerada += " " + operador + " " + siguienteNumero; 
-	        ultimoOperadorUtilizado = operador;
-	    }
+			int siguienteNumero = objetosAleatorios.nextInt(11) + 2;
+			expresionGenerada += " " + operador + " " + siguienteNumero;
+			ultimoOperadorUtilizado = operador;
+		}
 
-	    return expresionGenerada;
+		return expresionGenerada;
 	}
 
-	
-	
-	//Empezamos con las preguntas de Lengua
-	
+	// Empezamos con las preguntas de Lengua
+
 	/**
 	 * Estructura que siguen las preguntas de lengua
 	 */
-	private static void lengua() {
+	private static boolean lengua() {
 		System.out.println("PREGUNTA DE LENGUA");
 		System.out.print("Te damos esta palabra: ");
-		preguntasDeLengua();
+		String palabraAAdivinar = preguntasDeLengua("");
 		System.out.println("Ahora tienes que adivinar la palabra completa para sumar puntos.");
 		System.out.println("¿De qué palabra crees que se trata?");
 		Scanner palabraAdivinada = new Scanner(System.in);
-		String palabraPropuestaUsuario = palabraAdivinada.next();
+		String palabraUsuario = palabraAdivinada.next();
+		if (palabraUsuario.equalsIgnoreCase(palabraAAdivinar)) {
+			System.out.println("Enhorabuenas has acertado te llevas 1 punto");
+			return true;
+
+		} else {
+			System.out.println("OHH te has equivocado la palabra es: " + palabraAAdivinar + " la proxima vez sera.");
+			return false;
+		}
+
 	}
 
 	/**
 	 * Código que genera las preguntas de Lengua
 	 * 
+	 * @return
+	 * 
 	 * @since 1.1
 	 */
 
-	public static void preguntasDeLengua() {
+	public static String preguntasDeLengua(String palabraAUsar) {
 		Random palabraAleatoria = new Random();
 		int palabraEscogida = palabraAleatoria.nextInt(lineasMaximasDiccionario() + 1);
-		String palabraAUsar = lineasDiccionario.get(palabraEscogida);
+		palabraAUsar = lineasDiccionario.get(palabraEscogida);
 		String palabraOculta = ocultarLetras(palabraAUsar);
 		System.out.println(palabraOculta);
+		return palabraAUsar;
+
 	}
 
 	/**
@@ -206,97 +220,95 @@ public class Pregunta {
 		}
 		return new String(caracterAOcultar);
 	}
-	
-	
+
 	/**
 	 * Define las preguntas de ingles
 	 */
-	public static void ingles(){
+	public static void ingles() {
 		System.out.println("PREGUNTA DE INGLES");
 		System.out.println("Dada esta pregunta, dime cual de las siguientes opciones es la correcta para sumar puntos");
-		 Path rutaArchivoIngles = Paths.get(ConstantesRutas.archivoPreguntasIngles);
-	        leerArchivoIngles(rutaArchivoIngles);
-		
+		Path rutaArchivoIngles = Paths.get(ConstantesRutas.archivoPreguntasIngles);
+		leerArchivoIngles(rutaArchivoIngles);
+
 	}
 
 	/**
-	 * Metodo para leer y generar las preguntas y sus repuestas 
-	 * @param rutaArchivoIngles      Ruta del archivo donde estas todas las preguntas de ingles.
+	 * Metodo para leer y generar las preguntas y sus repuestas
+	 * 
+	 * @param rutaArchivoIngles Ruta del archivo donde estas todas las preguntas de
+	 *                          ingles.
 	 */
 	private static void leerArchivoIngles(Path rutaArchivoIngles) {
 		if (!Files.exists(rutaArchivoIngles)) {
-		    System.out.println("Archivo no encontrado");
+			System.out.println("Archivo no encontrado");
 		} else {
-		    try (BufferedReader preguntaDeIngles = new BufferedReader(new FileReader(ConstantesRutas.archivoPreguntasIngles))) {
-		   
-		        List<String> seleccionarPregunta = new ArrayList<>();
-		        List<List<String>> respuestas = new ArrayList<>();
+			try (BufferedReader preguntaDeIngles = new BufferedReader(
+					new FileReader(ConstantesRutas.archivoPreguntasIngles))) {
 
-		        extraerPreguntasRespuestas(preguntaDeIngles, seleccionarPregunta, respuestas);
+				List<String> seleccionarPregunta = new ArrayList<>();
+				List<List<String>> respuestas = new ArrayList<>();
 
-		        elegirPregunta(seleccionarPregunta, respuestas);
+				extraerPreguntasRespuestas(preguntaDeIngles, seleccionarPregunta, respuestas);
 
-		    } catch (IOException e) {
-		        System.err.println("Error al leer el archivo: " + e.getMessage());
-		    }
+				elegirPregunta(seleccionarPregunta, respuestas);
+
+			} catch (IOException e) {
+				System.err.println("Error al leer el archivo: " + e.getMessage());
+			}
 		}
 	}
+
 	/**
 	 * Metodo que nos extrae una de las preguntas y sus respuestas
-	 * @param preguntaDeIngles             Lee las pregunas de ingles
-	 * @param seleccionarPregunta          Escoge una de las pregunas leidas
-	 * @param respuestas				   Coje las respuestas	
-	 * @throws IOException                 Lanza una excepcion en el caso en el caso de haber algun error relaccionado con el archivo
+	 * 
+	 * @param preguntaDeIngles    Lee las pregunas de ingles
+	 * @param seleccionarPregunta Escoge una de las pregunas leidas
+	 * @param respuestas          Coje las respuestas
+	 * @throws IOException Lanza una excepcion en el caso en el caso de haber algun
+	 *                     error relaccionado con el archivo
 	 */
 	private static void extraerPreguntasRespuestas(BufferedReader preguntaDeIngles, List<String> seleccionarPregunta,
 			List<List<String>> respuestas) throws IOException {
 		String linea;
 		while ((linea = preguntaDeIngles.readLine()) != null) {
-		    if (linea.trim().endsWith("?")) {
-		        seleccionarPregunta.add(linea);
-		        List<String> respuestasActuales = new ArrayList<>();
-		        for (int contadorLineas = 0; contadorLineas < 4; contadorLineas++) {  // Asumimos que siempre hay 4 líneas de respuestas después de cada pregunta
-		            linea = preguntaDeIngles.readLine();
-		            if (linea != null) {
-		                respuestasActuales.add(linea);
-		            } else {
-		                break;  
-		            }
-		        }
-		        respuestas.add(respuestasActuales);
-		    }
+			if (linea.trim().endsWith("?")) {
+				seleccionarPregunta.add(linea);
+				List<String> respuestasActuales = new ArrayList<>();
+				for (int contadorLineas = 0; contadorLineas < 4; contadorLineas++) {
+					linea = preguntaDeIngles.readLine();
+					if (linea != null) {
+						respuestasActuales.add(linea);
+					} else {
+						break;
+					}
+				}
+				respuestas.add(respuestasActuales);
+			}
 		}
 	}
-	
+
 	/**
 	 * Elige aleatoriamente una de las preguntas de ingles y sus respuestas
-	 * @param seleccionarPregunta      Seleciona una de las preguntas del archivo
-	 * @param respuestas               Seleciona las repuestas de la pregunta generada
+	 * 
+	 * @param seleccionarPregunta Seleciona una de las preguntas del archivo
+	 * @param respuestas          Seleciona las repuestas de la pregunta generada
 	 */
 
 	private static void elegirPregunta(List<String> seleccionarPregunta, List<List<String>> respuestas) {
 		if (!seleccionarPregunta.isEmpty()) {
-		    Random elegirPreguntaExtraida = new Random();
-		    int preguntaFinal = elegirPreguntaExtraida.nextInt(seleccionarPregunta.size());
-		    System.out.println(seleccionarPregunta.get(preguntaFinal));
-		    List<String> respuestasSeleccionadas = respuestas.get(preguntaFinal);
-		    for (String respuesta : respuestasSeleccionadas) {
-		        System.out.println(respuesta);
-		    }
+			Random elegirPreguntaExtraida = new Random();
+			int preguntaFinal = elegirPreguntaExtraida.nextInt(seleccionarPregunta.size());
+			System.out.println(seleccionarPregunta.get(preguntaFinal));
+			List<String> respuestasSeleccionadas = respuestas.get(preguntaFinal);
+			for (String respuesta : respuestasSeleccionadas) {
+				System.out.println(respuesta);
+			}
 		}
 	}
-	
+
 	public int getTipoPregunta() {
 		return numeroPregunta;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 
 	public static void main(String[] args) throws IOException {
 		generarPreguntas();
