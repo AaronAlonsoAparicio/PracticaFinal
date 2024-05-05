@@ -218,12 +218,8 @@ public class Tribial_Challenge {
 		opcionElegida= teclado.nextInt();
 		switch (opcionElegida) {
 		case 1:
+			Partida.generarPartida();
 			
-			
-			
-			
-			
-			Pregunta.generarPreguntas();
 			break;
 
 		case 2:

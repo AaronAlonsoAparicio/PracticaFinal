@@ -35,39 +35,13 @@ public class Pregunta {
 	 * 
 	 * @return tipoDePreguntaGenerada
 	 */
-	private static int preguntas() {
-		Random preguntaAleatoria = new Random();
-		int tipoDePreguntaGenerada = preguntaAleatoria.nextInt(3) + 1;
-		return tipoDePreguntaGenerada;
-	}
 
-	/**
-	 * Metodo que nos va a generar las preguntas del programa.
-	 *
-	 */
-	public static void generarPreguntas() throws IOException {
-
-		int tipoPregunta = preguntas();
-
-		if (tipoPregunta == ConstantesPreguntas.PREGUNTA_MATES) {
-			matematicas(); // genera las preguntas de matematicas
-
-		} else if (tipoPregunta == ConstantesPreguntas.PREGUNTA_LENGUA) {
-			if (lengua()) {
-
-			}
-
-		} else {
-			ingles(); // Genera las preguntas de ingles
-
-		}
-	}
 
 	// Empezamos con las preguntas de matematicas
 	/**
 	 * Estructura de las preguntas de matematicas
 	 */
-	private static boolean matematicas() {
+	public static boolean matematicas() {
 		System.out.println("PREGUNTA DE MATEMATICAS");
 		System.out.println("Dada esta expresion matematica ¿Podrias decirme cual es el resultado?");
 		String operacionAresolver = expresionMatematica(4, 8);
@@ -134,7 +108,7 @@ public class Pregunta {
 	/**
 	 * Estructura que siguen las preguntas de lengua
 	 */
-	private static boolean lengua() {
+	static boolean lengua() {
 		System.out.println("PREGUNTA DE LENGUA");
 		System.out.print("Te damos esta palabra: ");
 		String palabraAAdivinar = preguntasDeLengua("");
@@ -310,8 +284,6 @@ public class Pregunta {
 		return numeroPregunta;
 	}
 
-	public static void main(String[] args) throws IOException {
-		generarPreguntas();
-	}
+	
 
 }
