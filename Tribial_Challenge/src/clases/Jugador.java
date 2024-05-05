@@ -68,13 +68,12 @@ public class Jugador {
 	 * Metodo para imprimir la informacion de los jugadores.
 	 */
 
-	public void imprimirInformacion() {
+	public  void imprimirInformacion() {
 
 		System.out.println(toString());
 
 	}
 
-	@Override
 	public String toString() {
 		return "Jugador:" + nombre +"["+ puntuacion +"]";
 	}

@@ -36,7 +36,6 @@ public class Pregunta {
 	 * @return tipoDePreguntaGenerada
 	 */
 
-
 	// Empezamos con las preguntas de matematicas
 	/**
 	 * Estructura de las preguntas de matematicas
@@ -198,11 +197,11 @@ public class Pregunta {
 	/**
 	 * Define las preguntas de ingles
 	 */
-	public static void ingles() {
+	public static boolean ingles() {
 		System.out.println("PREGUNTA DE INGLES");
 		System.out.println("Dada esta pregunta, dime cual de las siguientes opciones es la correcta para sumar puntos");
 		Path rutaArchivoIngles = Paths.get(ConstantesRutas.archivoPreguntasIngles);
-		leerArchivoIngles(rutaArchivoIngles);
+		return leerArchivoIngles(rutaArchivoIngles);
 
 	}
 
@@ -212,9 +211,10 @@ public class Pregunta {
 	 * @param rutaArchivoIngles Ruta del archivo donde estas todas las preguntas de
 	 *                          ingles.
 	 */
-	private static void leerArchivoIngles(Path rutaArchivoIngles) {
+	private static boolean leerArchivoIngles(Path rutaArchivoIngles) {
 		if (!Files.exists(rutaArchivoIngles)) {
 			System.out.println("Archivo no encontrado");
+			return false;
 		} else {
 			try (BufferedReader preguntaDeIngles = new BufferedReader(
 					new FileReader(ConstantesRutas.archivoPreguntasIngles))) {
@@ -224,10 +224,11 @@ public class Pregunta {
 
 				extraerPreguntasRespuestas(preguntaDeIngles, seleccionarPregunta, respuestas);
 
-				elegirPregunta(seleccionarPregunta, respuestas);
+				return elegirPregunta(seleccionarPregunta, respuestas);
 
 			} catch (IOException e) {
 				System.err.println("Error al leer el archivo: " + e.getMessage());
+				return false;
 			}
 		}
 	}
@@ -268,7 +269,7 @@ public class Pregunta {
 	 * @param respuestas          Seleciona las repuestas de la pregunta generada
 	 */
 
-	private static void elegirPregunta(List<String> seleccionarPregunta, List<List<String>> respuestas) {
+	private static boolean elegirPregunta(List<String> seleccionarPregunta, List<List<String>> respuestas) {
 		if (!seleccionarPregunta.isEmpty()) {
 			Random elegirPreguntaExtraida = new Random();
 			int preguntaFinal = elegirPreguntaExtraida.nextInt(seleccionarPregunta.size());
@@ -277,13 +278,16 @@ public class Pregunta {
 			for (String respuesta : respuestasSeleccionadas) {
 				System.out.println(respuesta);
 			}
+			Scanner teclado = new Scanner(System.in);
+			int respuestaUsuario = teclado.nextInt() - 1;
+			return respuestaUsuario == 0;
+
 		}
+		return false;
 	}
 
 	public int getTipoPregunta() {
 		return numeroPregunta;
 	}
-
-	
 
 }
