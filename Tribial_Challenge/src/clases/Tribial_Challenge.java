@@ -253,14 +253,6 @@ public class Tribial_Challenge {
 		System.out.println("*** TRIBIAL CHALLENGE ***");
 		System.out.println("     Acierta y gana    ");
 		System.out.println("Un programa prensentado por Aaron Alonso.");
-		System.out.println("¿Cuantos jugadores van a participar?");
-		teclado = new Scanner(System.in);
-		int jugadoresHumanos = teclado.nextInt();
-		System.out.println("En el dia a de hoy van a participar " + jugadoresHumanos + " jugador/es");
-		int jugadoresMaquina = ConstantesJugador.MAX_JUGADORES - jugadoresHumanos;
-		System.out.println("Y con " + jugadoresMaquina + " jugadores maquina");
-		int numJugadores = jugadoresHumanos + jugadoresMaquina;
-	
 
 	}
 	
