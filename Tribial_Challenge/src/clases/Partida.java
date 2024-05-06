@@ -7,8 +7,6 @@ import constantes.ConstantesJugador;
 import constantes.ConstantesPreguntas;
 import constantes.ConstantesTipoPartida;
 
-	//TODO: Que se termine el bucle al terminar todos los turnos
-	//TODO: Añadir el comprobante de los nombres a cada uno de los jugadores humanos. 
 	//TODO: Hacer constantes algunas variables fijas.
 /**
  * Clase que define las caracteristicas de las partidas y sus atributos. 
@@ -43,7 +41,7 @@ public class Partida {
 		creacionJugadores(cantidadJugadores);
 		elegirPartida();
 		int tipoPartida = teclado.nextInt();
-		int numeroTurnos = 0;
+		int numeroTurnos = ConstantesTipoPartida.NUMERO_TURNOS;
 		partida(tipoPartida, numeroTurnos);
 
 	}
@@ -55,6 +53,7 @@ public class Partida {
 	 * @param numeroTurnos    Numero de turnos que va a terner la partida segun el tipoPartida
 	 */
 	private static void partida(int tipoPartida, int numeroTurnos) {
+		int turnosPartida = 0;
 		do {
 			numeroTurnos = seleccionTipoPartida(tipoPartida, numeroTurnos);
 			for (int turno = 1; turno < numeroTurnos; turno++) {
@@ -71,15 +70,19 @@ public class Partida {
 					}
 
 				}
+				
 
 			}
 
-			System.out.println("Asi quedan los marcadores.");
+			System.out.println("ASI QUEDAN LOS MARCADORES:");
 			for (Jugador jugador : jugadores) {
 				jugador.imprimirInformacion();
 			}
+			
+			
+			turnosPartida++;
 
-		} while (tipoPartida != 5);
+		} while (turnosPartida > numeroTurnos);
 	}
 
 

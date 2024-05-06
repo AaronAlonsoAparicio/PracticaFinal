@@ -152,10 +152,10 @@ public class Pregunta {
 	 */
 
 	public static int lineasMaximasDiccionario() {
-		Path archivoDiccionario = Paths.get(ConstantesRutas.archivoDiccionario);
+		Path archivoDiccionario = Paths.get(ConstantesRutas.ARCHIVO_DICCIONARIO);
 
 		if (!Files.exists(archivoDiccionario)) {
-			System.out.println("El archivo en la ruta " + ConstantesRutas.archivoDiccionario
+			System.out.println("El archivo en la ruta " + ConstantesRutas.ARCHIVO_DICCIONARIO
 					+ " no existe o no se encuentra en este directorio.");
 
 		} else {
@@ -200,7 +200,7 @@ public class Pregunta {
 	public static boolean ingles() {
 		System.out.println("PREGUNTA DE INGLES");
 		System.out.println("Dada esta pregunta, dime cual de las siguientes opciones es la correcta para sumar puntos");
-		Path rutaArchivoIngles = Paths.get(ConstantesRutas.archivoPreguntasIngles);
+		Path rutaArchivoIngles = Paths.get(ConstantesRutas.ARCHIVO_PREGUNTAS_INGLES);
 		return leerArchivoIngles(rutaArchivoIngles);
 
 	}
@@ -217,7 +217,7 @@ public class Pregunta {
 			return false;
 		} else {
 			try (BufferedReader preguntaDeIngles = new BufferedReader(
-					new FileReader(ConstantesRutas.archivoPreguntasIngles))) {
+					new FileReader(ConstantesRutas.ARCHIVO_PREGUNTAS_INGLES))) {
 
 				List<String> seleccionarPregunta = new ArrayList<>();
 				List<List<String>> respuestas = new ArrayList<>();

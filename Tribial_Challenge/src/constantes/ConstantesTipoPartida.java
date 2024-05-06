@@ -23,6 +23,13 @@ public class ConstantesTipoPartida {
 	 */
 	public static int PARTIDA_LARGA = 20;
 	
+	/**
+	 * Constante para el numero de turnos.
+	 */
+	public static int NUMERO_TURNOS = 0;
+	
+	
+	
 	
 
 }
