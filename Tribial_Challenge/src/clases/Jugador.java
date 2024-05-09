@@ -14,12 +14,12 @@ import constantes.ConstantesJugador;
 public class Jugador {
 
 	private String nombre;
-	private  int puntuacion = ConstantesJugador.PUNTUACION_INICIAL;
-	
-	
-	//TODO: Crear metodo para ayadir jugador
+	private int puntuacion = ConstantesJugador.PUNTUACION_INICIAL;
+
+	// TODO: Crear metodo para ayadir jugador
 	/**
 	 * Contructor de los objetos de Jugador.
+	 * 
 	 * @param nombreJugador
 	 */
 	public Jugador(String nombreJugador) {
@@ -27,24 +27,25 @@ public class Jugador {
 		this.nombre = nombreJugador;
 
 	}
-	
-	
+
 	/**
 	 * Clase que nos dice el nombre de los jugadores.
+	 * 
 	 * @return nombre del Jugador
 	 */
 
 	public int getPuntuacion() {
 		return puntuacion;
 	}
+
 	public String getNombre() {
 		return nombre;
 	}
 
 	public void sumarPunto(int puntos) {
-        this.puntuacion += puntos;  
-    }
-	
+		this.puntuacion += puntos;
+	}
+
 	/**
 	 * Metodo que nos comprueba mediente el nombre del jugador si ya hay uno igual.
 	 * 
@@ -68,19 +69,21 @@ public class Jugador {
 	 * Metodo para imprimir la informacion de los jugadores.
 	 */
 
-	public  void imprimirInformacion() {
+	public void imprimirInformacion() {
 
 		System.out.println(toString());
 
 	}
 
 	public String toString() {
-		return "Jugador:" + nombre +"["+ puntuacion +"]";
+		return "Jugador:" + nombre + "[" + puntuacion + "]";
 	}
 
 	/**
 	 * Metodo que no comprueba que el nombre del jugador esta correctamente formado.
-	 * @return truen si el nombre esta correctamente formado, false si tiene algo invalido.
+	 * 
+	 * @return truen si el nombre esta correctamente formado, false si tiene algo
+	 *         invalido.
 	 */
 	public boolean comprobarNombreJugador() {
 		int contador = 0;
@@ -91,17 +94,13 @@ public class Jugador {
 				return false;
 
 			}
-			
-			
+
 			contador++;
 		}
-		
+
 		System.out.println("Nombre valido.");
 		return true;
-		
 
 	}
-	
-	
 
 }

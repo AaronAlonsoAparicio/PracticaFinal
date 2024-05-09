@@ -6,7 +6,7 @@ import java.util.Scanner;
 import constantes.ConstantesJugador;
 import constantes.ConstantesPreguntas;
 import constantes.ConstantesTipoPartida;
-import registroLog.Historico;
+import registrosSalida.Historico;
 
 //TODO: Hacer constantes algunas variables fijas.
 /**
@@ -19,6 +19,8 @@ public class Partida {
 	private static Jugador[] jugadores; // Array del numero de jugadores que hay en la partida
 	static Scanner teclado; // Scanner para que el usuario nos de informacion
 
+	
+	
 	/**
 	 * Metodo que genenera aleatoriamente una de las distintas preguntas del
 	 * programa
@@ -35,7 +37,7 @@ public class Partida {
 	 * Genera las partidas del juego.
 	 */
 	public static void generarPartida() {
-
+		Historico.crearHistorico();
 		preguntas = new Pregunta();
 		jugadores = new Jugador[ConstantesJugador.MAX_JUGADORES];
 		teclado = new Scanner(System.in);
@@ -89,6 +91,7 @@ public class Partida {
 					registroPartida += jugador.getNombre() + " " + jugador.getPuntuacion();
 				}
 			}
+		
 			registroPartida = registroPartida.trim();
 
 			if (!registroPartida.isEmpty()) {
@@ -124,7 +127,7 @@ public class Partida {
 			if (numeroJugador < cantidadJugadores) {
 				System.out.println("Nombre del jugador:" + (numeroJugador + 1) + ":");
 				String nombreJugador = teclado.next();
-				jugadores[numeroJugador] = new Jugador(nombreJugador); // Numero de jugadores humanos que van a jugar la
+				jugadores[numeroJugador] = new Jugador(nombreJugador);// Numero de jugadores humanos que van a jugar la
 																		// partida
 
 			} else {
@@ -199,6 +202,8 @@ public class Partida {
 
 	// Borrar cuando se finalize completamente la clase Partida
 	public static void main(String[] args) {
+		
+		
 		generarPartida();
 	}
 
