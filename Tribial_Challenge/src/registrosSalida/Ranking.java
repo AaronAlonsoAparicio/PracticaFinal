@@ -10,7 +10,7 @@ public class Ranking {
 	
 	public static boolean crearDirectorioHistorico() {
 
-		Path rutaDirectorio = Paths.get(ConstantesRutas.DIRECTORIO_HISTORICO); // Crea la ruta donde se va a ubicar dentro del
+		Path rutaDirectorio = Paths.get(ConstantesRutas.DIRECTORIO_SALIDA); // Crea la ruta donde se va a ubicar dentro del
 																		// proyecto.
 
 		try {
@@ -36,10 +36,10 @@ public class Ranking {
 	public static boolean creaArchivoHistorico() {
 		if(crearDirectorioHistorico()) {
 			
-			Path rutaFicheroHistorico = Paths.get(ConstantesRutas.ARCHIVO_HISTORICO);
+			Path rutaFicheroRanking = Paths.get(ConstantesRutas.ARCHIVO_RANKING);
 			try {
-				if(!Files.exists(rutaFicheroHistorico)) {
-					Files.createFile(rutaFicheroHistorico);
+				if(!Files.exists(rutaFicheroRanking)) {
+					Files.createFile(rutaFicheroRanking);
 					System.out.println("Archivo creado con exito");
 					return true;
 				}

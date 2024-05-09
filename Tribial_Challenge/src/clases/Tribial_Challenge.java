@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import constantes.ConstantesJugador;
+import registrosSalida.Historico;
 
 /**
  * Practica tercer trimestre, programa principal.
@@ -23,7 +24,7 @@ public class Tribial_Challenge {
 	}
 
 	public static void main(String[] args) throws IOException {
-
+		Historico.crearHistorico();
 		presentacionPrograma();
 		opcionesPrograma();
 		
@@ -223,10 +224,12 @@ public class Tribial_Challenge {
 			break;
 
 		case 2:
+		
 
 			break;
 		case 3:
-
+		Historico.mostrarHistorico();
+			
 			break;
 
 		case 4:

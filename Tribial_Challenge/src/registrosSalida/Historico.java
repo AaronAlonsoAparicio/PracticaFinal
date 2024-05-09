@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.List;
 
 import constantes.ConstantesRutas;
 
@@ -24,33 +25,26 @@ public class Historico {
 
 	public static void crearHistorico() {
 
-		Path rutaDirectorio = Paths.get(ConstantesRutas.DIRECTORIO_HISTORICO); // Crea la ruta donde se va a ubicar
-																				// dentro del
-		// proyecto.
+		Path rutaDirectorio = Paths.get(ConstantesRutas.DIRECTORIO_SALIDA); // Crea la ruta donde se va a ubicar
+																			// dentro del  proyecto.
 
 		try {
 			if (!Files.exists(rutaDirectorio)) {
 				Files.createDirectories(rutaDirectorio);
 				System.out.println("Directorio creado con exito.");
 			}
-			
+
 			Path rutaFicheroHistorico = Paths.get(ConstantesRutas.ARCHIVO_HISTORICO);
 			if (!Files.exists(rutaFicheroHistorico)) {
 				Files.createFile(rutaFicheroHistorico);
 				System.out.println("Archivo creado con exito");
 			}
-			
-			
-			
-			
+
 		} catch (Exception errorDirectorio) {
 			System.out.println("No se ha podido crear el directorio.");
 			System.out.println("Ruta no valida o el directorio ya existe");
 			System.out.println(errorDirectorio);
 		}
-		
-		
-
 
 	}
 
@@ -63,6 +57,23 @@ public class Historico {
 			System.out.println("Error al escribir en el historico" + errorFichero.getMessage());
 		}
 
+	}
+
+	public static void mostrarHistorico() {
+		Path rutaHistorico = Paths.get(ConstantesRutas.ARCHIVO_HISTORICO);
+		if (Files.exists(rutaHistorico)) {
+			try {
+				List<String> lineasHistorico = Files.readAllLines(rutaHistorico); //Leemos todas la lineas del archivo 
+				for (String linea : lineasHistorico) { //Mostramos todas las lineas
+					System.out.println(linea);
+
+				}
+
+			} catch (Exception error) {
+				System.out.println("Error al leer el archivo historico.txt" + error.getMessage());
+			}
+
+		}
 	}
 
 }

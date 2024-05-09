@@ -21,14 +21,19 @@ public class ConstantesRutas {
 	 * Cosntante que nos indica la ruta relativa del directorio donde se va a guardar el ARCHIVO_LOG
 	 */
 	
-	public static final String DIRECTORIO_HISTORICO = "./archivosSalida";
+	public static final String DIRECTORIO_SALIDA = "./archivosSalida";
 	
 	/**
-	 * Constante que nos indica la ruta del archivo .log 
+	 * Constante que nos indica la ruta del archivo historico.txt
 	 */
 	
-	public static final String ARCHIVO_HISTORICO = DIRECTORIO_HISTORICO + "/historico.txt";
+	public static final String ARCHIVO_HISTORICO = DIRECTORIO_SALIDA + "/historico.txt";
 	
+	
+	/**
+	 *Costante que nos indica la ruta del archivo ranking.txt
+	 */
+	public static final String ARCHIVO_RANKING = DIRECTORIO_SALIDA + "/raking.txt";
 	
 	
 
