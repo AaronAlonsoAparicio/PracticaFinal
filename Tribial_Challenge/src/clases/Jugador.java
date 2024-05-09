@@ -17,7 +17,7 @@ public class Jugador {
 	private  int puntuacion = ConstantesJugador.PUNTUACION_INICIAL;
 	
 	
-
+	//TODO: Crear metodo para ayadir jugador
 	/**
 	 * Contructor de los objetos de Jugador.
 	 * @param nombreJugador
@@ -101,5 +101,7 @@ public class Jugador {
 		
 
 	}
+	
+	
 
 }
