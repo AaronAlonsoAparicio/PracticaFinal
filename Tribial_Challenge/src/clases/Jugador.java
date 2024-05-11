@@ -17,6 +17,7 @@ public class Jugador {
 	private int puntuacion = ConstantesJugador.PUNTUACION_INICIAL;
 
 	// TODO: Crear metodo para ayadir jugador
+	
 	/**
 	 * Contructor de los objetos de Jugador.
 	 * 
@@ -98,7 +99,6 @@ public class Jugador {
 			contador++;
 		}
 
-		System.out.println("Nombre valido.");
 		return true;
 
 	}

@@ -1,5 +1,6 @@
 package clases;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -7,20 +8,20 @@ import constantes.ConstantesJugador;
 import constantes.ConstantesPreguntas;
 import constantes.ConstantesTipoPartida;
 import registrosSalida.Historico;
+import registrosSalida.Ranking;
 
-//TODO: Hacer constantes algunas variables fijas.
+
 /**
  * Clase que define las caracteristicas de las partidas y sus atributos.
  * 
  * @author Aaron Alonso
  */
 public class Partida {
-	private static Pregunta preguntas; // preguntas de la partida
+	
+	//TODO: Añadir el comprobante de los nombres de los jugadores.
+
 	private static Jugador[] jugadores; // Array del numero de jugadores que hay en la partida
 	static Scanner teclado; // Scanner para que el usuario nos de informacion
-
-	
-	
 	/**
 	 * Metodo que genenera aleatoriamente una de las distintas preguntas del
 	 * programa
@@ -36,16 +37,13 @@ public class Partida {
 	/**
 	 * Genera las partidas del juego.
 	 */
-	public static void generarPartida() {
+	public static void generarPartida(ArrayList<Jugador> jugadores) {
 		Historico.crearHistorico();
-		preguntas = new Pregunta();
-		jugadores = new Jugador[ConstantesJugador.MAX_JUGADORES];
+		Ranking.crearRanking();
+	
 		teclado = new Scanner(System.in);
-
+		Partida.jugadores = jugadores.toArray(new Jugador[ConstantesJugador.MAX_JUGADORES]);
 		System.out.println("¿Cuantos jugadores van a participar?");
-		int cantidadJugadores = teclado.nextInt();
-
-		creacionJugadores(cantidadJugadores);
 		elegirPartida();
 		int tipoPartida = teclado.nextInt();
 		int numeroTurnos = ConstantesTipoPartida.NUMERO_TURNOS;
@@ -117,27 +115,7 @@ public class Partida {
 		System.out.println("4) Partida Larga. Tiene " + ConstantesTipoPartida.PARTIDA_LARGA + " turnos.");
 	}
 
-	/**
-	 * Crea un numero de jugadares segun el numero que nos indique el usuario
-	 * 
-	 * @param cantidadJugadores Cantidad de jugadores humanos.
-	 */
-	private static void creacionJugadores(int cantidadJugadores) {
-		for (int numeroJugador = 0; numeroJugador < ConstantesJugador.MAX_JUGADORES; numeroJugador++) {
-			if (numeroJugador < cantidadJugadores) {
-				System.out.println("Nombre del jugador:" + (numeroJugador + 1) + ":");
-				String nombreJugador = teclado.next();
-				jugadores[numeroJugador] = new Jugador(nombreJugador);// Numero de jugadores humanos que van a jugar la
-																		// partida
 
-			} else {
-				jugadores[numeroJugador] = new Jugador("CPU" + (numeroJugador - 1)); // Numero de jugadaores CPU de la
-																						// partida
-
-			}
-
-		}
-	}
 
 	/**
 	 * Genera las distintas partidas y nos dice si hemos acertado o no.
@@ -150,15 +128,15 @@ public class Partida {
 		boolean hasAcertado = false;
 		switch (preguntaFormulada) {
 		case ConstantesPreguntas.PREGUNTA_MATES: // Caso para las partidas de matematicas
-			hasAcertado = preguntas.matematicas(); // true si se ha acertado la partida
+			hasAcertado = PreguntaMatematicas.matematicas(); // true si se ha acertado la partida
 
 			break;
 		case ConstantesPreguntas.PREGUNTA_LENGUA: // Caso para las partidas de lengua
-			hasAcertado = preguntas.lengua(); // true si se ha acertado la partida
+			hasAcertado = PreguntaLengua.lengua(); // true si se ha acertado la partida
 
 			break;
 		case ConstantesPreguntas.PREGUNTA_INGLES: // Caso para las partidas de ingles.
-			hasAcertado = preguntas.ingles(); // true si se ha acertado la partida
+			hasAcertado = PreguntaIngles.ingles(); // true si se ha acertado la partida
 
 			break;
 
@@ -203,8 +181,7 @@ public class Partida {
 	// Borrar cuando se finalize completamente la clase Partida
 	public static void main(String[] args) {
 		
-		
-		generarPartida();
+		generarPartida(null);
 	}
 
 }

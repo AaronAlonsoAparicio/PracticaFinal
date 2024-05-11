@@ -30,35 +30,43 @@ public class Historico {
 
 		try {
 			if (!Files.exists(rutaDirectorio)) {
-				Files.createDirectories(rutaDirectorio);
-				System.out.println("Directorio creado con exito.");
+				Files.createDirectories(rutaDirectorio); //Crea el directorio si no existe
+				
 			}
 
 			Path rutaFicheroHistorico = Paths.get(ConstantesRutas.ARCHIVO_HISTORICO);
-			if (!Files.exists(rutaFicheroHistorico)) {
+			if (!Files.exists(rutaFicheroHistorico)) {  //Crea el archivo historico.txt si se ha creado correctamente el directorio.
 				Files.createFile(rutaFicheroHistorico);
-				System.out.println("Archivo creado con exito");
+				
 			}
 
 		} catch (Exception errorDirectorio) {
 			System.out.println("No se ha podido crear el directorio.");
-			System.out.println("Ruta no valida o el directorio ya existe");
+			System.out.println("Ruta no valida o el directorio ya existe"); // Mensajes de error en el caso de no haberse podido crear correctamente.
 			System.out.println(errorDirectorio);
 		}
 
 	}
+	/**
+	 * Metodo para almacenar informacion en el archivo historico.txt
+	 * @param mensaje     Contenido la informacion a almacenar
+	 */
 
 	public static void almacenarInforamcionJugadores(String mensaje) {
 		Path rutaFicheroHistorico = Paths.get(ConstantesRutas.ARCHIVO_HISTORICO);
 
 		try {
-			Files.writeString(rutaFicheroHistorico, mensaje + System.lineSeparator(), StandardOpenOption.APPEND);
+			Files.writeString(rutaFicheroHistorico, mensaje + System.lineSeparator(), StandardOpenOption.APPEND); // StandarOpenOption.APPEND Guarda la inforamcion al final 
+																																		   // del archivo sin sobreescribir
 		} catch (IOException errorFichero) {
 			System.out.println("Error al escribir en el historico" + errorFichero.getMessage());
 		}
 
 	}
-
+	
+	/**
+	 * Clase  que lee el archivo historico.txt linea a linea y las enseña por pantalla
+	 */
 	public static void mostrarHistorico() {
 		Path rutaHistorico = Paths.get(ConstantesRutas.ARCHIVO_HISTORICO);
 		if (Files.exists(rutaHistorico)) {

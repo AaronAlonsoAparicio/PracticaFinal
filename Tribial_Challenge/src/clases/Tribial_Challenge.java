@@ -2,11 +2,12 @@ package clases;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.Collections;
 import java.util.Scanner;
 
 import constantes.ConstantesJugador;
 import registrosSalida.Historico;
+import registrosSalida.Ranking;
 
 /**
  * Practica tercer trimestre, programa principal.
@@ -18,22 +19,44 @@ import registrosSalida.Historico;
 public class Tribial_Challenge {
 	static Scanner teclado;
 	static ArrayList<Jugador> jugadores;
-	
+
 	public static ArrayList<Jugador> getJugadores() {
-	    return jugadores;
+		return jugadores;
 	}
 
 	public static void main(String[] args) throws IOException {
 		Historico.crearHistorico();
 		presentacionPrograma();
-		opcionesPrograma();
-		
+		ArrayList<Jugador> jugadores = jugadoresPartida();
+		opcionesPrograma(jugadores);
+
+	}
+
+	public static ArrayList<Jugador> jugadoresPartida() {
+		teclado = new Scanner(System.in);
+		ArrayList<Jugador> jugadores = new ArrayList<>();
+		System.out.println("¿Cuántos jugadores van a participar?");
+		int jugadoresHumanos = teclado.nextInt();
+
+		for (int numeroJugadores = 0; numeroJugadores < jugadoresHumanos; numeroJugadores++) {
+			System.out.println("Nombre del jugador" + (numeroJugadores + 1) + ": ");
+			String nombreJugador = teclado.next();
+			jugadores.add(new Jugador(nombreJugador));
+		}
+
+		for (int jugadoresCpu = jugadores.size(); jugadoresCpu < ConstantesJugador.MAX_JUGADORES; jugadoresCpu++) {
+			jugadores.add(new Jugador("CPU" + (jugadoresCpu - jugadoresHumanos + 1)));
+
+		}
+
+		return jugadores;
 
 	}
 
 	/**
 	 * Menu de las opciones propias que tienen los jugadores
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 * @since 1.0
 	 */
 	private static void menuJugadores() throws IOException {
@@ -46,14 +69,14 @@ public class Tribial_Challenge {
 		System.out.println("Antes de hacer nada dinos tu nombre para poder identificarte");
 		String nombre = teclado.next();
 		opcionesJugadores(nombre);
-		
-		
+
 	}
-	
+
 	/**
 	 * Opciones del menu propio de los jugadores.
+	 * 
 	 * @param nombre indicamos el nombre del jugador a registrarse
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 
 	private static void opcionesJugadores(String nombre) throws IOException {
@@ -68,23 +91,23 @@ public class Tribial_Challenge {
 			opcion = teclado.nextInt();
 			switch (opcion) {
 			case 1:
-				casoUnoJugadores();
+				mostrarJugador(); // Mostramos lo jugadores
 
 				break;
 			case 2:
 
-				casoDosJugadores(nuevoJugador);
+				anyadirJugador(nuevoJugador); // Caso para añadir jugadores
 
 				break;
 
 			case 3:
-				casoTresJugadores();
+				eliminarJugador(); // Caso para eliminar a jugadores
 
 				break;
 
 			case 4:
 
-				opcionesPrograma();
+				opcionesPrograma(jugadores); // Volver al menu principal del programa
 				break;
 
 			default:
@@ -93,12 +116,13 @@ public class Tribial_Challenge {
 		} while (opcion != 5);
 	}
 
-	
 	/**
-	 * Metodo por el cual eliminamos a jugadores, opcion 3 del menu de los jugadores.
+	 * Metodo por el cual eliminamos a jugadores, opcion 3 del menu de los
+	 * jugadores.
+	 * 
 	 * @since 1.0
 	 */
-	private static void casoTresJugadores() {
+	private static void eliminarJugador() {
 		System.out.println("Has entrado en Eliminar Jugador.");
 		System.out.println("¿Desea continuar? (Si/No)");
 		String continuar = teclado.next();
@@ -110,15 +134,15 @@ public class Tribial_Challenge {
 				jugadorAEliminar++;
 			}
 			int jugadrorEliminado = teclado.nextInt();
-			if(jugadrorEliminado >= 0 && jugadrorEliminado < jugadores.size()) {
+			if (jugadrorEliminado >= 0 && jugadrorEliminado < jugadores.size()) {
 				jugadores.remove(jugadrorEliminado);
 				System.out.println("Jugador eliminado con exito");
-				
-			}else {
+
+			} else {
 				System.out.println("Jugador no encontrado.");
-				
+
 			}
-			
+
 		}
 	}
 
@@ -127,7 +151,7 @@ public class Tribial_Challenge {
 	 * 
 	 */
 
-	private static void casoUnoJugadores() {
+	private static void mostrarJugador() {
 		if (jugadores.isEmpty()) {
 			System.out.println("Todavia no hay nigun jugador registrador.");
 			System.out.println("Porfavor seleciona la opcion 2 para registarse");
@@ -139,8 +163,6 @@ public class Tribial_Challenge {
 
 		}
 	}
-	
-	
 
 	/**
 	 * Metodo del caso dos del menu de los jugadores
@@ -150,28 +172,28 @@ public class Tribial_Challenge {
 	 * 
 	 */
 
-	private static void casoDosJugadores(Jugador nuevoJugador) {
-		
-		if(nuevoJugador.comprobarNombreJugador() == true) {
-	
-		if (!jugadores.contains(nuevoJugador)) {
-			System.out.println("Registrado correctamente.");
-			jugadores.add(nuevoJugador);
+	private static void anyadirJugador(Jugador nuevoJugador) {
+
+		if (nuevoJugador.comprobarNombreJugador() == true) {
+
+			if (!jugadores.contains(nuevoJugador)) {
+				System.out.println("Registrado correctamente.");
+				jugadores.add(nuevoJugador);
+
+			} else {
+				System.out.println("Ha habido algun problema con su identificacion.");
+			}
+			anaydirNuevoJugador();
 
 		} else {
-			System.out.println("Ha habido algun problema con su identificacion.");
-		}
-		anaydirNuevoJugador();
-		
-		}else {
 			System.out.println("No se ha podido añadir el " + nuevoJugador);
 		}
-	
-		
+
 	}
-	
+
 	/**
 	 * Metodo para añadir un nuevo jugador
+	 * 
 	 * @since 1.0
 	 */
 
@@ -199,51 +221,53 @@ public class Tribial_Challenge {
 
 	/**
 	 * Creamo el menu de opciones principal que vamos a usar en el programa.
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
+	 * @param jugadores Jugadores que se van a usar en el programa
 	 * 
 	 * @since 1.0
 	 */
-	private static void opcionesPrograma() throws IOException {
+	private static void opcionesPrograma(ArrayList<Jugador> jugadores) throws IOException {
 		int opcionElegida;
 		teclado = new Scanner(System.in);
 		do {
-		System.out.println("¿Qué quieres hacer?");
-		System.out.println("Podemos elegir entre:");
-		System.out.println("1) Jugar Partida.");
-		System.out.println("2) Ranking.");
-		System.out.println("3) Historial.");
-		System.out.println("4) Jugadores.");
-		System.out.println("5) Salir.");
+			System.out.println("¿Qué quieres hacer?");
+			System.out.println("Podemos elegir entre:");
+			System.out.println("1) Jugar Partida.");
+			System.out.println("2) Ranking.");
+			System.out.println("3) Historial.");
+			System.out.println("4) Jugadores.");
+			System.out.println("5) Salir.");
 
-		System.out.println("¿Que deseas hacer?");
-		opcionElegida= teclado.nextInt();
-		switch (opcionElegida) {
-		case 1:
-			Partida.generarPartida();
-			
-			break;
+			System.out.println("¿Que deseas hacer?");
+			opcionElegida = teclado.nextInt();
+			switch (opcionElegida) {
+			case 1:
+				Partida.generarPartida(jugadores); // Genera una nueva partida
 
-		case 2:
-		
+				break;
 
-			break;
-		case 3:
-		Historico.mostrarHistorico();
-			
-			break;
+			case 2:
+			//	Ranking.mostrarRanking(); // Muestra el ranking
 
-		case 4:
-			menuJugadores();
+				break;
+			case 3:
+				Historico.mostrarHistorico(); // Muestra el historico
 
-			break;
+				break;
 
-		case 5:
-		default:
-			System.out.println("Hasta la proxima.");
-			break;
-		} 
-		}while (opcionElegida != 5);
-		
+			case 4:
+				menuJugadores(); // Accedemos al menu de los jugadores
+
+				break;
+
+			case 5:
+			default:
+				System.out.println("Hasta la proxima.");
+				break;
+			}
+		} while (opcionElegida != 5);
+
 	}
 
 	/**
@@ -258,7 +282,5 @@ public class Tribial_Challenge {
 		System.out.println("Un programa prensentado por Aaron Alonso.");
 
 	}
-	
-	
 
 }
