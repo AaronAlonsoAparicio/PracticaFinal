@@ -1,6 +1,7 @@
 package clases;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -8,8 +9,8 @@ import constantes.ConstantesJugador;
 import constantes.ConstantesPreguntas;
 import constantes.ConstantesTipoPartida;
 import registrosSalida.Historico;
+import registrosSalida.LogJuego;
 import registrosSalida.Ranking;
-
 
 /**
  * Clase que define las caracteristicas de las partidas y sus atributos.
@@ -17,11 +18,12 @@ import registrosSalida.Ranking;
  * @author Aaron Alonso
  */
 public class Partida {
-	
-	//TODO: Añadir el comprobante de los nombres de los jugadores.
 
-	private static Jugador[] jugadores; // Array del numero de jugadores que hay en la partida
+	// TODO: Añadir el comprobante de los nombres de los jugadores.
+
+	public static Jugador[] jugadores; // Array del numero de jugadores que hay en la partida
 	static Scanner teclado; // Scanner para que el usuario nos de informacion
+
 	/**
 	 * Metodo que genenera aleatoriamente una de las distintas preguntas del
 	 * programa
@@ -37,10 +39,10 @@ public class Partida {
 	/**
 	 * Genera las partidas del juego.
 	 */
-	public static void generarPartida(ArrayList<Jugador> jugadores) {
+	public static ArrayList<Jugador> generarPartida(ArrayList<Jugador> jugadores) {
 		Historico.crearHistorico();
 		Ranking.crearRanking();
-	
+
 		teclado = new Scanner(System.in);
 		Partida.jugadores = jugadores.toArray(new Jugador[ConstantesJugador.MAX_JUGADORES]);
 		System.out.println("¿Cuantos jugadores van a participar?");
@@ -48,6 +50,19 @@ public class Partida {
 		int tipoPartida = teclado.nextInt();
 		int numeroTurnos = ConstantesTipoPartida.NUMERO_TURNOS;
 		partida(tipoPartida, numeroTurnos);
+
+		ArrayList<Jugador> jugadoresDePartida = new ArrayList<>();
+		for (Jugador jugador : Partida.jugadores) {
+			Jugador infoJugador = new Jugador(jugador.getNombre());
+			infoJugador.setPuntuacion(jugador.getPuntuacion());
+
+			jugadoresDePartida.add(infoJugador);
+			
+			
+
+		}
+		
+		return jugadoresDePartida;
 
 	}
 
@@ -63,7 +78,7 @@ public class Partida {
 		int turnosPartida = 0;
 		do {
 			numeroTurnos = seleccionTipoPartida(tipoPartida, numeroTurnos);
-			for (int turno = 1; turno < numeroTurnos; turno++) {
+			for (int turno = 1; turno <= numeroTurnos; turno++) {
 				System.out.println("Turno " + turno + " de " + numeroTurnos);
 				for (Jugador jugador : jugadores) {
 					System.out.println("Le toca al jugador " + jugador.getNombre());
@@ -71,33 +86,35 @@ public class Partida {
 					if (hasAcertado) {
 						System.out.println("Has acertado, " + jugador.getNombre() + " enhorabuena sumas 1 punto");
 						jugador.sumarPunto(1);
-
+						jugador.sumarPreguntaCorrecta(1);
 					} else {
-						System.out.println("Fallaste, " + jugador.getNombre() + " la proxima vez sera:");
+						System.out.println("Fallaste, " + jugador.getNombre() + " la próxima vez será:");
 					}
-
 				}
-
 			}
 
 			System.out.println("ASI QUEDAN LOS MARCADORES:");
-			String registroPartida = "";
 			for (Jugador jugador : jugadores) {
 				jugador.imprimirInformacion();
+			}
+
+			String registroPartida = "";
+			for (Jugador jugador : jugadores) {
 				// Con esto comprobamos que el jugador es humano por que no empieza por CPU
 				if (!jugador.getNombre().startsWith("CPU")) {
-					registroPartida += jugador.getNombre() + " " + jugador.getPuntuacion();
+					registroPartida += jugador.getNombre() + " " + jugador.getPuntuacion() + "\n";
 				}
 			}
-		
+
 			registroPartida = registroPartida.trim();
 
 			if (!registroPartida.isEmpty()) {
 				Historico.almacenarInforamcionJugadores(registroPartida);
-
+				Ranking.almacenarRaking();
 			}
 
 			turnosPartida++;
+			
 
 		} while (turnosPartida > numeroTurnos);
 	}
@@ -114,8 +131,6 @@ public class Partida {
 		System.out.println("3) Partida Normal. Tiene " + ConstantesTipoPartida.PARTIDA_NORMAL + " turnos.");
 		System.out.println("4) Partida Larga. Tiene " + ConstantesTipoPartida.PARTIDA_LARGA + " turnos.");
 	}
-
-
 
 	/**
 	 * Genera las distintas partidas y nos dice si hemos acertado o no.
@@ -180,7 +195,7 @@ public class Partida {
 
 	// Borrar cuando se finalize completamente la clase Partida
 	public static void main(String[] args) {
-		
+
 		generarPartida(null);
 	}
 

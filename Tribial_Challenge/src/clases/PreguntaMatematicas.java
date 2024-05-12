@@ -78,5 +78,7 @@ public class PreguntaMatematicas {
 
 		return expresionGenerada;
 	}
+	
+	
 
 }

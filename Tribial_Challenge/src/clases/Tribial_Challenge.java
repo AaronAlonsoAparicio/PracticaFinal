@@ -2,11 +2,10 @@ package clases;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
-
 import constantes.ConstantesJugador;
 import registrosSalida.Historico;
+import registrosSalida.LogJuego;
 import registrosSalida.Ranking;
 
 /**
@@ -25,31 +24,36 @@ public class Tribial_Challenge {
 	}
 
 	public static void main(String[] args) throws IOException {
+		Ranking.crearRanking();
+		LogJuego.crearLog();
 		Historico.crearHistorico();
 		presentacionPrograma();
-		ArrayList<Jugador> jugadores = jugadoresPartida();
+		jugadores = jugadoresPartida();
 		opcionesPrograma(jugadores);
 
 	}
 
 	public static ArrayList<Jugador> jugadoresPartida() {
 		teclado = new Scanner(System.in);
-		ArrayList<Jugador> jugadores = new ArrayList<>();
+		ArrayList<Jugador> jugadoresPartida = new ArrayList<>();
 		System.out.println("¿Cuántos jugadores van a participar?");
 		int jugadoresHumanos = teclado.nextInt();
 
 		for (int numeroJugadores = 0; numeroJugadores < jugadoresHumanos; numeroJugadores++) {
 			System.out.println("Nombre del jugador" + (numeroJugadores + 1) + ": ");
 			String nombreJugador = teclado.next();
-			jugadores.add(new Jugador(nombreJugador));
+			jugadoresPartida.add(new Jugador(nombreJugador));
+			
 		}
 
-		for (int jugadoresCpu = jugadores.size(); jugadoresCpu < ConstantesJugador.MAX_JUGADORES; jugadoresCpu++) {
-			jugadores.add(new Jugador("CPU" + (jugadoresCpu - jugadoresHumanos + 1)));
+		for (int jugadoresCpu = jugadoresPartida
+				.size(); jugadoresCpu < ConstantesJugador.MAX_JUGADORES; jugadoresCpu++) {
+			jugadoresPartida.add(new Jugador("CPU" + (jugadoresCpu - jugadoresHumanos + 1)));
 
 		}
-
-		return jugadores;
+		LogJuego.salidaAcciones("Inicio de la partida " + jugadoresHumanos + " jugadores humanos, " + (ConstantesJugador.MAX_JUGADORES - jugadoresHumanos)+" jugadores CPU.");
+		
+		return jugadoresPartida;
 
 	}
 
@@ -61,7 +65,7 @@ public class Tribial_Challenge {
 	 */
 	private static void menuJugadores() throws IOException {
 		jugadores = new ArrayList<Jugador>();
-		int opcion;
+	
 
 		teclado = new Scanner(System.in);
 		System.out.println("Has seleccionado la opcion: Jugadores");
@@ -123,28 +127,28 @@ public class Tribial_Challenge {
 	 * @since 1.0
 	 */
 	private static void eliminarJugador() {
-		System.out.println("Has entrado en Eliminar Jugador.");
-		System.out.println("¿Desea continuar? (Si/No)");
-		String continuar = teclado.next();
-		if (continuar.equalsIgnoreCase("Si")) {
-			System.out.println("¿Que jugador deseas eliminar?");
-			int jugadorAEliminar = 0;
-			for (Jugador jugador : jugadores) {
-				System.out.println(jugadorAEliminar + ". " + jugador.getNombre());
-				jugadorAEliminar++;
-			}
-			int jugadrorEliminado = teclado.nextInt();
-			if (jugadrorEliminado >= 0 && jugadrorEliminado < jugadores.size()) {
-				jugadores.remove(jugadrorEliminado);
-				System.out.println("Jugador eliminado con exito");
-
-			} else {
-				System.out.println("Jugador no encontrado.");
-
-			}
-
-		}
+	    System.out.println("Has entrado en Eliminar Jugador.");
+	    System.out.println("¿Desea continuar? (Si/No)");
+	    String continuar = teclado.next();
+	    if (continuar.equalsIgnoreCase("Si")) {
+	        System.out.println("¿Qué jugador deseas eliminar?");
+	        String nombreJugadorEliminar = teclado.next();
+	        boolean jugadorEncontrado = false;
+	        for (Jugador jugador : jugadores) {
+	            if (jugador.getNombre().equalsIgnoreCase(nombreJugadorEliminar)) {
+	                jugadores.remove(jugador);
+	                jugadorEncontrado = true;
+	                System.out.println("Jugador eliminado con éxito");
+	                LogJuego.salidaAcciones("Jugador eliminado " + nombreJugadorEliminar);
+	                break; 
+	            }
+	        }
+	        if (!jugadorEncontrado) {
+	            System.out.println("Jugador no encontrado.");
+	        }
+	    }
 	}
+
 
 	/**
 	 * Metodo del caso 1 del menu de los jugadores.
@@ -209,6 +213,7 @@ public class Tribial_Challenge {
 			if (!jugadores.contains(anaydirNuevoJugador)) {
 				System.out.println("Añadido correctamente el jugador: " + nombreJugador);
 				jugadores.add(anaydirNuevoJugador);
+				LogJuego.salidaAcciones("Añadido nuevo jugador " + anaydirNuevoJugador);
 
 			} else {
 				System.out.println("Jugador ya existente en el sistema o nombre incorrecto");
@@ -227,7 +232,8 @@ public class Tribial_Challenge {
 	 * 
 	 * @since 1.0
 	 */
-	private static void opcionesPrograma(ArrayList<Jugador> jugadores) throws IOException {
+	private static void opcionesPrograma(ArrayList<Jugador> listaJugadores) throws IOException {
+
 		int opcionElegida;
 		teclado = new Scanner(System.in);
 		do {
@@ -243,12 +249,15 @@ public class Tribial_Challenge {
 			opcionElegida = teclado.nextInt();
 			switch (opcionElegida) {
 			case 1:
-				Partida.generarPartida(jugadores); // Genera una nueva partida
+				ArrayList<Jugador> jugadoresPartida = Partida.generarPartida(jugadores);
+				jugadores.clear();
+				jugadores.addAll(jugadoresPartida);
 
 				break;
 
 			case 2:
-			//	Ranking.mostrarRanking(); // Muestra el ranking
+				Ranking.mostrarRanking(); //Mostramos el ranking
+				
 
 				break;
 			case 3:

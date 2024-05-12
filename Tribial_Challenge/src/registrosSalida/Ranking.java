@@ -1,22 +1,25 @@
 package registrosSalida;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import clases.Jugador;
+import clases.Partida;
 import constantes.ConstantesRutas;
 
 public class Ranking {
 
-	
 	/**
 	 * Metodo que crea el archivo rankign.txt
 	 */
-	
+
 	public static void crearRanking() {
 
 		Path rutaDirectorio = Paths.get(ConstantesRutas.DIRECTORIO_SALIDA); // Crea la ruta donde se va a ubicar
@@ -43,21 +46,55 @@ public class Ranking {
 		}
 
 	}
-	
-	/**
-     * Método que muestra el ranking de jugadores ordenado por puntuación.
-     * 
-     * @param jugadores Lista de jugadores a mostrar en el ranking.
-     */
-    public static void mostrarRanking(ArrayList<Jugador> jugadores) {
-        // Calcular el ranking (ordenar la lista de jugadores por puntaje)
-        Collections.sort(jugadores, (j1, j2) -> Integer.compare(j2.getPuntuacion(), j1.getPuntuacion()));
 
-        // Mostrar el ranking
-        System.out.println("*** RANKING ***");
-        for (Jugador jugador : jugadores) {
-            System.out.println(jugador.getNombre() + " " + jugador.getPuntuacion());
-        }
-    }
+	public static void almacenarRaking() {
+	    // Acceder directamente a la lista de jugadores en Partida
+	    List<Jugador> jugadoresHumanos = Arrays.stream(Partida.jugadores)
+	            .filter(jugador -> !jugador.getNombre().startsWith("CPU"))
+	            .collect(Collectors.toList());
+
+	    // Ordenar la lista de jugadores filtrada
+	    Collections.sort(jugadoresHumanos, (j1, j2) -> Integer.compare(j2.getPreguntasRespondidasCorrectas(),
+	            j1.getPreguntasRespondidasCorrectas()));
+
+	    List<String> lineasRanking = new ArrayList<>();
+	    lineasRanking.add("*** RANKING  *** ");
+	    for (Jugador jugador : jugadoresHumanos) {
+	        String jugadorRanking = jugador.getNombre() + " " + jugador.getPreguntasRespondidasCorrectas();
+	        lineasRanking.add(jugadorRanking);
+	    }
+	    
+	    Path rutaArchivoRanking = Paths.get(ConstantesRutas.ARCHIVO_RANKING);
+	    try {
+	        Files.write(rutaArchivoRanking, lineasRanking);
+	    } catch (IOException error) {
+	        System.out.println("Error al guardar la informacion" + error.getMessage());
+	    }
+	}
+
+
+	/**
+	 * Método que muestra el ranking de jugadores ordenado por puntuación.
+	 */
+	public static void mostrarRanking() {
+		Path rutaArchivoRanking = Paths.get(ConstantesRutas.ARCHIVO_RANKING);
+
+		if (Files.exists(rutaArchivoRanking)) {
+			try {
+				List<String> leerRanking = Files.readAllLines(rutaArchivoRanking);
+				for (String ranking : leerRanking) {
+					System.out.println(ranking);
+
+				}
+
+			} catch (Exception error) {
+				System.out.println("Error al leer el archivo " + error.getMessage());
+			}
+
+		} else {
+
+		}
+
+	}
 
 }

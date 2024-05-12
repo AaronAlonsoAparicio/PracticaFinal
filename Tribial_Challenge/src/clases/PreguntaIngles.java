@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -105,13 +106,18 @@ public class PreguntaIngles {
 			int preguntaFinal = elegirPreguntaExtraida.nextInt(seleccionarPregunta.size());
 			System.out.println(seleccionarPregunta.get(preguntaFinal));
 			List<String> respuestasSeleccionadas = respuestas.get(preguntaFinal);
-			for (String respuesta : respuestasSeleccionadas) {
-				System.out.println(respuesta);
+			Collections.shuffle(respuestasSeleccionadas);
+			for (int contador = 0; contador < respuestasSeleccionadas.size(); contador++) {
+				System.out.println((contador + 1)+ ")" + respuestasSeleccionadas.get(contador));
+				
 			}
+			
 			Scanner teclado = new Scanner(System.in);
 			int respuestaUsuario = teclado.nextInt() - 1;
-			return respuestaUsuario == 0;
-
+		
+			String respuestaCorrecta = respuestas.get(preguntaFinal).get(0);
+			String opcionUsuario = respuestasSeleccionadas.get(respuestaUsuario);
+			return opcionUsuario.equals(respuestaCorrecta);
 		}
 		return false;
 	}

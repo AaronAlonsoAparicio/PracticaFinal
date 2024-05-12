@@ -12,11 +12,10 @@ import java.util.Set;
 
 import constantes.ConstantesRutas;
 
-public class PreguntaLengua{
-	
-	
+public class PreguntaLengua {
+
 	static List<String> lineasDiccionario = null;
-	
+
 	static boolean lengua() {
 		System.out.println("PREGUNTA DE LENGUA");
 		System.out.print("Te damos esta palabra: ");
@@ -26,13 +25,21 @@ public class PreguntaLengua{
 		Scanner palabraAdivinada = new Scanner(System.in);
 		String palabraUsuario = palabraAdivinada.next();
 		if (palabraUsuario.equalsIgnoreCase(palabraAAdivinar)) {
-			System.out.println("Enhorabuenas has acertado te llevas 1 punto");
-			return true;
+			int contador = 0;
+			while (contador < palabraUsuario.length()) {
+				if (Character.isLetter(palabraUsuario.charAt(contador))) {
+					return true;	
+				}
+
+				contador++;
+			}
 
 		} else {
-			System.out.println("OHH te has equivocado la palabra es: " + palabraAAdivinar + " la proxima vez sera.");
-			return false;
+			System.out.println(
+					"OHH te has equivocado la palabra es: " + palabraAAdivinar + " la proxima vez sera.");
+			
 		}
+		return false;
 
 	}
 
@@ -104,6 +111,4 @@ public class PreguntaLengua{
 		return new String(caracterAOcultar);
 	}
 
-
-	
 }

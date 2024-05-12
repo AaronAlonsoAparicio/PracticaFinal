@@ -35,6 +35,11 @@ public class ConstantesRutas {
 	 */
 	public static final String ARCHIVO_RANKING = DIRECTORIO_SALIDA + "/raking.txt";
 	
+	/**
+	 *Constante que nos indica la ruta del archivo salida.log
+	 */
+	public static final String ARCHIVO_LOG = DIRECTORIO_SALIDA + "/salida.log";
+	
 	
 
 }

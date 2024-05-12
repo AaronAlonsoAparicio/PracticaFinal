@@ -15,6 +15,7 @@ public class Jugador {
 
 	private String nombre;
 	private int puntuacion = ConstantesJugador.PUNTUACION_INICIAL;
+	private int preguntasRespondidasCorrectas;
 
 	// TODO: Crear metodo para ayadir jugador
 	
@@ -26,27 +27,11 @@ public class Jugador {
 	public Jugador(String nombreJugador) {
 		super();
 		this.nombre = nombreJugador;
+		this.preguntasRespondidasCorrectas = 0;
+		
 
 	}
-
-	/**
-	 * Clase que nos dice el nombre de los jugadores.
-	 * 
-	 * @return nombre del Jugador
-	 */
-
-	public int getPuntuacion() {
-		return puntuacion;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void sumarPunto(int puntos) {
-		this.puntuacion += puntos;
-	}
-
+	
 	/**
 	 * Metodo que nos comprueba mediente el nombre del jugador si ya hay uno igual.
 	 * 
@@ -66,19 +51,9 @@ public class Jugador {
 		return Objects.equals(nombre, other.nombre);
 	}
 
-	/**
-	 * Metodo para imprimir la informacion de los jugadores.
-	 */
+	
 
-	public void imprimirInformacion() {
-
-		System.out.println(toString());
-
-	}
-
-	public String toString() {
-		return "Jugador:" + nombre + "[" + puntuacion + "]";
-	}
+	
 
 	/**
 	 * Metodo que no comprueba que el nombre del jugador esta correctamente formado.
@@ -102,5 +77,43 @@ public class Jugador {
 		return true;
 
 	}
+	
+	
+	
+	public String toString() {
+		return nombre + "[" + puntuacion + "]";
+	}
+	
+	/**
+	 * Metodo para imprimir la informacion de los jugadores.
+	 */
+
+	public void imprimirInformacion() {
+		System.out.println(toString());
+	}
+
+	public void sumarPunto(int puntos) {
+		this.puntuacion += puntos;
+	}
+	
+	public int getPreguntasRespondidasCorrectas() {
+		return preguntasRespondidasCorrectas;
+	}
+
+	public void setPuntuacion(int puntuacion) {
+		this.puntuacion = puntuacion;
+	}
+	public void sumarPreguntaCorrecta(int correcto) {
+        this.preguntasRespondidasCorrectas += correcto ;
+    }
+	
+	public int getPuntuacion() {
+		return puntuacion;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
 
 }
