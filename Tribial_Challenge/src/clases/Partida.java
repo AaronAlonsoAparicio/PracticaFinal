@@ -42,7 +42,7 @@ public class Partida {
 	public static ArrayList<Jugador> generarPartida(ArrayList<Jugador> jugadores) {
 		Historico.crearHistorico();
 		Ranking.crearRanking();
-		
+		PreguntaLengua.diccionario();
 		teclado = new Scanner(System.in);
 		Partida.jugadores = jugadores.toArray(new Jugador[ConstantesJugador.MAX_JUGADORES]);
 		System.out.println("¿Cuantos jugadores van a participar?");

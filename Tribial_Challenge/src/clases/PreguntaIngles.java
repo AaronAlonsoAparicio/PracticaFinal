@@ -73,26 +73,29 @@ public class PreguntaIngles {
 	 * @throws IOException Lanza una excepcion en el caso en el caso de haber algun
 	 *                     error relaccionado con el archivo
 	 */
-	private static void extraerPreguntasRespuestas(BufferedReader preguntaDeIngles, List<String> seleccionarPregunta,
-			List<List<String>> respuestas) throws IOException {
-		String linea;
-		while ((linea = preguntaDeIngles.readLine()) != null) {
-			if (linea.trim().endsWith("?")) {
-				seleccionarPregunta.add(linea);
-				List<String> respuestasActuales = new ArrayList<>();
-				for (int contadorLineas = 0; contadorLineas < 4; contadorLineas++) {
-					linea = preguntaDeIngles.readLine();
-					if (linea != null) {
-						respuestasActuales.add(linea);
-					} else {
-						break;
-					}
-				}
-				respuestas.add(respuestasActuales);
-			}
-		}
-	}
-
+	 private static void extraerPreguntasRespuestas(BufferedReader preguntaDeIngles, List<String> seleccionarPregunta,
+	            List<List<String>> respuestas) throws IOException {
+	        String linea;
+	        while ((linea = preguntaDeIngles.readLine()) != null) {
+	            if (linea.trim().endsWith("?")) {
+	                seleccionarPregunta.add(linea);
+	                List<String> respuestasActuales = new ArrayList<>();
+	                // Leer la respuesta correcta
+	                linea = preguntaDeIngles.readLine();
+	                if (linea != null) {
+	                    respuestasActuales.add(linea);
+	                }
+	                // Leer las tres respuestas incorrectas
+	                for (int contadorLineas = 0; contadorLineas < 3; contadorLineas++) {
+	                    linea = preguntaDeIngles.readLine();
+	                    if (linea != null) {
+	                        respuestasActuales.add(linea);
+	                    }
+	                }
+	                respuestas.add(respuestasActuales);
+	            }
+	        }
+	    }
 	/**
 	 * Elige aleatoriamente una de las preguntas de ingles y sus respuestas
 	 * 
@@ -105,19 +108,30 @@ public class PreguntaIngles {
 			Random elegirPreguntaExtraida = new Random();
 			int preguntaFinal = elegirPreguntaExtraida.nextInt(seleccionarPregunta.size());
 			System.out.println(seleccionarPregunta.get(preguntaFinal));
-			List<String> respuestasSeleccionadas = respuestas.get(preguntaFinal);
+			List<String> respuestasSeleccionadas = new ArrayList<>(respuestas.get(preguntaFinal));
 			Collections.shuffle(respuestasSeleccionadas);
-			for (int contador = 0; contador < respuestasSeleccionadas.size(); contador++) {
-				System.out.println((contador + 1)+ ")" + respuestasSeleccionadas.get(contador));
-				
-			}
-			
-			Scanner teclado = new Scanner(System.in);
-			int respuestaUsuario = teclado.nextInt() - 1;
 		
-			String respuestaCorrecta = respuestas.get(preguntaFinal).get(0);
-			String opcionUsuario = respuestasSeleccionadas.get(respuestaUsuario);
-			return opcionUsuario.equals(respuestaCorrecta);
+			char[] opcion = {'A','B','C','D'};
+			for (int respuesta = 0; respuesta < respuestasSeleccionadas.size(); respuesta++) {
+                System.out.println(opcion[respuesta] + ") " + respuestasSeleccionadas.get(respuesta));
+            }
+			Scanner teclado = new Scanner(System.in);
+			char respuestaUsuario = teclado.next().charAt(0);
+			int respuestaCorrecta = respuestaUsuario - 'A';
+			
+			 if (respuestaCorrecta < 0 || respuestaCorrecta >= respuestasSeleccionadas.size()) {
+	                System.out.println("Opción inválida.");
+	                return false;
+	            }
+			String correcta = respuestas.get(preguntaFinal).get(0);
+			String opcionRespuesta = respuestasSeleccionadas.get(respuestaCorrecta);
+			boolean acierto = opcionRespuesta.equals(correcta);
+            if (!acierto) {
+                System.out.println("Respuesta incorrecta. La respuesta correcta era: " + correcta);
+            }
+            return acierto;
+			
+			
 		}
 		return false;
 	}

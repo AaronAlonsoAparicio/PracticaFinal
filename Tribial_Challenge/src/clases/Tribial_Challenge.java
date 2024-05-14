@@ -47,6 +47,13 @@ public class Tribial_Challenge {
 
 	}
 
+	
+	/**
+	 * Metodo para crear los jugadores CPU de la partida
+	 * @param jugadoresPartida Jugadores que van a jugar la partida
+	 * @param jugadoresHumanos numero de jugadores que ya hay en la partida
+	 * @see crearJugadoresHumano 
+	 */
 	private static void crearJugadoresCpu(ArrayList<Jugador> jugadoresPartida, int jugadoresHumanos) {
 		System.out.println("¿Cuantos jugadores CPU van a jugar?");
 		int jugadoresCpu = teclado.nextInt();
@@ -64,6 +71,12 @@ public class Tribial_Challenge {
 		}
 	}
 
+	/**
+	 * Metodo para crear los jugadores humanos de la partida
+	 * @param jugadoresPartida Jugadores que van a jugar la partida
+	 * @param jugadoresHumanos Jugadores humanos que van a jugar la partida
+	 */
+	
 	private static void crearJugadorHumano(ArrayList<Jugador> jugadoresPartida, int jugadoresHumanos) {
 		for (int numeroJugadores = 0; numeroJugadores < jugadoresHumanos; numeroJugadores++) {
 			boolean nombreValido = false;

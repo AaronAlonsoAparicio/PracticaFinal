@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import constantes.ConstantesRutas;
 
@@ -24,20 +25,13 @@ public class PreguntaLengua {
 		System.out.println("¿De qué palabra crees que se trata?");
 		Scanner palabraAdivinada = new Scanner(System.in);
 		String palabraUsuario = palabraAdivinada.next();
-		if (palabraUsuario.equalsIgnoreCase(palabraAAdivinar)) {
-			int contador = 0;
-			while (contador < palabraUsuario.length()) {
-				if (Character.isLetter(palabraUsuario.charAt(contador))) {
-					return true;	
-				}
 
-				contador++;
-			}
+		if (palabraUsuario.equalsIgnoreCase(palabraAAdivinar)) {
+			return true;
 
 		} else {
-			System.out.println(
-					"OHH te has equivocado la palabra es: " + palabraAAdivinar + " la proxima vez sera.");
-			
+			System.out.println("OHH te has equivocado la palabra es: " + palabraAAdivinar + " la proxima vez sera.");
+
 		}
 		return false;
 
@@ -53,7 +47,7 @@ public class PreguntaLengua {
 
 	public static String preguntasDeLengua(String palabraAUsar) {
 		Random palabraAleatoria = new Random();
-		int palabraEscogida = palabraAleatoria.nextInt(lineasMaximasDiccionario() + 1);
+		int palabraEscogida = palabraAleatoria.nextInt(lineasDiccionario.size());
 		palabraAUsar = lineasDiccionario.get(palabraEscogida);
 		String palabraOculta = ocultarLetras(palabraAUsar);
 		System.out.println(palabraOculta);
@@ -68,24 +62,20 @@ public class PreguntaLengua {
 	 * @throws ExcepcionesFicheros Errores relacionados con los ficheros.
 	 */
 
-	public static int lineasMaximasDiccionario() {
+	public static void diccionario() {
 		Path archivoDiccionario = Paths.get(ConstantesRutas.ARCHIVO_DICCIONARIO);
 
 		if (!Files.exists(archivoDiccionario)) {
-			System.out.println("El archivo en la ruta " + ConstantesRutas.ARCHIVO_DICCIONARIO
+			System.out.println("El archivo " + ConstantesRutas.ARCHIVO_DICCIONARIO
 					+ " no existe o no se encuentra en este directorio.");
-
 		} else {
 			try {
-				lineasDiccionario = Files.readAllLines(archivoDiccionario);
-
+				lineasDiccionario = Files.readAllLines(archivoDiccionario).stream()
+						.filter(palabra -> palabra.length() > 3).collect(Collectors.toList());
 			} catch (IOException errorFicheros) {
-
 				errorFicheros.printStackTrace();
 			}
-
 		}
-		return lineasDiccionario.size();
 
 	}
 
@@ -101,6 +91,7 @@ public class PreguntaLengua {
 		char[] caracterAOcultar = palabraAdivinar.toCharArray();
 		int cantidadALetrasOcultar = palabraAdivinar.length() / 3;
 		Set<Integer> posicionesOcultas = new HashSet<>();
+
 		while (posicionesOcultas.size() < cantidadALetrasOcultar) {
 			int posicionLetaOculta = letraAleatroriaAOcultar.nextInt(palabraAdivinar.length());
 			posicionesOcultas.add(posicionLetaOculta);
