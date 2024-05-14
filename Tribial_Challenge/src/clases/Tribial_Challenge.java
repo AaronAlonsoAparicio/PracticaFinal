@@ -40,9 +40,9 @@ public class Tribial_Challenge {
 		int jugadoresHumanos = teclado.nextInt();
 
 		crearJugadorHumano(jugadoresPartida, jugadoresHumanos);
-		
+
 		crearJugadoresCpu(jugadoresPartida, jugadoresHumanos);
-	
+
 		return jugadoresPartida;
 
 	}
@@ -50,33 +50,34 @@ public class Tribial_Challenge {
 	private static void crearJugadoresCpu(ArrayList<Jugador> jugadoresPartida, int jugadoresHumanos) {
 		System.out.println("¿Cuantos jugadores CPU van a jugar?");
 		int jugadoresCpu = teclado.nextInt();
-		
+
 		int totalJugadores = jugadoresCpu + jugadoresHumanos;
-		 if (totalJugadores > ConstantesJugador.MAX_JUGADORES) {
-		        System.out.println("El número total de jugadores no puede exceder de " + ConstantesJugador.MAX_JUGADORES + ".");
-		        jugadoresCpu = ConstantesJugador.MAX_JUGADORES - jugadoresHumanos; 
-		        System.out.println("Se ajustará el número de jugadores CPU a " + jugadoresCpu + ".");
-		    }
-		 
-		 for (int numeroCpu = 0; numeroCpu < jugadoresCpu; numeroCpu++) {
-		        jugadoresPartida.add(new Jugador("CPU" + (numeroCpu + 1)));
-		    }
+		if (totalJugadores > ConstantesJugador.MAX_JUGADORES) {
+			System.out.println(
+					"El número total de jugadores no puede exceder de " + ConstantesJugador.MAX_JUGADORES + ".");
+			jugadoresCpu = ConstantesJugador.MAX_JUGADORES - jugadoresHumanos;
+			System.out.println("Se ajustará el número de jugadores CPU a " + jugadoresCpu + ".");
+		}
+
+		for (int numeroCpu = 0; numeroCpu < jugadoresCpu; numeroCpu++) {
+			jugadoresPartida.add(new Jugador("CPU" + (numeroCpu + 1)));
+		}
 	}
 
-	
 	private static void crearJugadorHumano(ArrayList<Jugador> jugadoresPartida, int jugadoresHumanos) {
 		for (int numeroJugadores = 0; numeroJugadores < jugadoresHumanos; numeroJugadores++) {
 			boolean nombreValido = false;
-			System.out.println("Nombre del jugador" + (numeroJugadores + 1) + ": ");
-			String nombreJugador = teclado.next();
+
 			do {
-			Jugador nuevoJugador = new Jugador(nombreJugador);
-			if(nuevoJugador != null && nuevoJugador.comprobarNombreJugador()) {
-			jugadoresPartida.add(new Jugador(nombreJugador));
-			nombreValido = true;
-			}
-			
-			}while (!nombreValido);
+				System.out.println("Nombre del jugador" + (numeroJugadores + 1) + ": ");
+				String nombreJugador = teclado.next();
+				Jugador nuevoJugador = new Jugador(nombreJugador);
+				if (nuevoJugador != null && nuevoJugador.comprobarNombreJugador()) {
+					jugadoresPartida.add(new Jugador(nombreJugador));
+					nombreValido = true;
+				}
+
+			} while (!nombreValido);
 		}
 	}
 
@@ -148,28 +149,27 @@ public class Tribial_Challenge {
 	 * @since 1.0
 	 */
 	private static void eliminarJugador() {
-	    System.out.println("Has entrado en Eliminar Jugador.");
-	    System.out.println("¿Desea continuar? (Si/No)");
-	    String continuar = teclado.next();
-	    if (continuar.equalsIgnoreCase("Si")) {
-	        System.out.println("¿Qué jugador deseas eliminar?");
-	        String nombreJugadorEliminar = teclado.next();
-	        boolean jugadorEncontrado = false;
-	        for (Jugador jugador : jugadores) {
-	            if (jugador.getNombre().equalsIgnoreCase(nombreJugadorEliminar)) {
-	                jugadores.remove(jugador);
-	                jugadorEncontrado = true;
-	                System.out.println("Jugador eliminado con éxito");
-	                LogJuego.salidaAcciones("Jugador eliminado " + nombreJugadorEliminar);
-	                break; 
-	            }
-	        }
-	        if (!jugadorEncontrado) {
-	            System.out.println("Jugador no encontrado.");
-	        }
-	    }
+		System.out.println("Has entrado en Eliminar Jugador.");
+		System.out.println("¿Desea continuar? (Si/No)");
+		String continuar = teclado.next();
+		if (continuar.equalsIgnoreCase("Si")) {
+			System.out.println("¿Qué jugador deseas eliminar?");
+			String nombreJugadorEliminar = teclado.next();
+			boolean jugadorEncontrado = false;
+			for (Jugador jugador : jugadores) {
+				if (jugador.getNombre().equalsIgnoreCase(nombreJugadorEliminar)) {
+					jugadores.remove(jugador);
+					jugadorEncontrado = true;
+					System.out.println("Jugador eliminado con éxito");
+					LogJuego.salidaAcciones("Jugador eliminado " + nombreJugadorEliminar);
+					break;
+				}
+			}
+			if (!jugadorEncontrado) {
+				System.out.println("Jugador no encontrado.");
+			}
+		}
 	}
-
 
 	/**
 	 * Metodo del caso 1 del menu de los jugadores.
@@ -277,8 +277,7 @@ public class Tribial_Challenge {
 				break;
 
 			case 2:
-				Ranking.mostrarRanking(); //Mostramos el ranking
-				
+				Ranking.mostrarRanking(); // Mostramos el ranking
 
 				break;
 			case 3:
