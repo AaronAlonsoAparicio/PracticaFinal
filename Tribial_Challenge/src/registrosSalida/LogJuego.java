@@ -75,8 +75,7 @@ public class LogJuego {
 	private static void cambiarLog(Path archivoSalidaLog) {
 		try {
 			String sufijo = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-			Path ficheroLog = Paths.get(ConstantesRutas.ARCHIVO_LOG);
-
+			Path ficheroLog = Paths.get(ConstantesRutas.ARCHIVO_LOG +"."+ sufijo);
 			Files.move(archivoSalidaLog, ficheroLog);
 		} catch (IOException e) {
 			System.out.println("No se ha podido cambiar el sufijo del archivo");

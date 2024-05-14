@@ -42,7 +42,7 @@ public class Partida {
 	public static ArrayList<Jugador> generarPartida(ArrayList<Jugador> jugadores) {
 		Historico.crearHistorico();
 		Ranking.crearRanking();
-
+		
 		teclado = new Scanner(System.in);
 		Partida.jugadores = jugadores.toArray(new Jugador[ConstantesJugador.MAX_JUGADORES]);
 		System.out.println("¿Cuantos jugadores van a participar?");
@@ -53,14 +53,16 @@ public class Partida {
 
 		ArrayList<Jugador> jugadoresDePartida = new ArrayList<>();
 		for (Jugador jugador : Partida.jugadores) {
+			if(jugador != null) {
 			Jugador infoJugador = new Jugador(jugador.getNombre());
 			infoJugador.setPuntuacion(jugador.getPuntuacion());
 
 			jugadoresDePartida.add(infoJugador);
 			
-			
+			}
 
 		}
+		
 		
 		return jugadoresDePartida;
 
@@ -81,27 +83,32 @@ public class Partida {
 			for (int turno = 1; turno <= numeroTurnos; turno++) {
 				System.out.println("Turno " + turno + " de " + numeroTurnos);
 				for (Jugador jugador : jugadores) {
-					System.out.println("Le toca al jugador " + jugador.getNombre());
-					boolean hasAcertado = preguntasFormuladas();
-					if (hasAcertado) {
-						System.out.println("Has acertado, " + jugador.getNombre() + " enhorabuena sumas 1 punto");
-						jugador.sumarPunto(1);
-						jugador.sumarPreguntaCorrecta(1);
-					} else {
-						System.out.println("Fallaste, " + jugador.getNombre() + " la próxima vez será:");
-					}
-				}
+					if (jugador != null && jugador.getNombre() != null) { 
+	                    System.out.println("Le toca al jugador " + jugador.getNombre());
+	                    boolean hasAcertado = preguntasFormuladas();
+	                    if (hasAcertado) {
+	                        System.out.println("Has acertado, " + jugador.getNombre() + " enhorabuena sumas 1 punto");
+	                        jugador.sumarPunto(1);
+	                        jugador.sumarPreguntaCorrecta(1);
+	                    } else {
+	                        System.out.println("Fallaste, " + jugador.getNombre() + " la próxima vez será:");
+	                    }
+	                }
+	            }
 			}
 
 			System.out.println("ASI QUEDAN LOS MARCADORES:");
 			for (Jugador jugador : jugadores) {
+				
+				if(jugador != null) {
 				jugador.imprimirInformacion();
+				}
 			}
 
 			String registroPartida = "";
 			for (Jugador jugador : jugadores) {
 				// Con esto comprobamos que el jugador es humano por que no empieza por CPU
-				if (!jugador.getNombre().startsWith("CPU")) {
+				if (jugador!= null &&!jugador.getNombre().startsWith("CPU")) {
 					registroPartida += jugador.getNombre() + " " + jugador.getPuntuacion() + "\n";
 				}
 			}
@@ -109,8 +116,10 @@ public class Partida {
 			registroPartida = registroPartida.trim();
 
 			if (!registroPartida.isEmpty()) {
+				LogJuego.salidaAcciones("Partida empezada");
 				Historico.almacenarInforamcionJugadores(registroPartida);
 				Ranking.almacenarRaking();
+				LogJuego.salidaAcciones("Partida terminada");
 			}
 
 			turnosPartida++;
@@ -193,10 +202,6 @@ public class Partida {
 		return numeroTurnos;
 	}
 
-	// Borrar cuando se finalize completamente la clase Partida
-	public static void main(String[] args) {
 
-		generarPartida(null);
-	}
 
 }

@@ -18,7 +18,7 @@ public class Jugador {
 	private int preguntasRespondidasCorrectas;
 
 	// TODO: Crear metodo para ayadir jugador
-	
+
 	/**
 	 * Contructor de los objetos de Jugador.
 	 * 
@@ -28,10 +28,9 @@ public class Jugador {
 		super();
 		this.nombre = nombreJugador;
 		this.preguntasRespondidasCorrectas = 0;
-		
 
 	}
-	
+
 	/**
 	 * Metodo que nos comprueba mediente el nombre del jugador si ya hay uno igual.
 	 * 
@@ -51,10 +50,6 @@ public class Jugador {
 		return Objects.equals(nombre, other.nombre);
 	}
 
-	
-
-	
-
 	/**
 	 * Metodo que no comprueba que el nombre del jugador esta correctamente formado.
 	 * 
@@ -64,8 +59,8 @@ public class Jugador {
 	public boolean comprobarNombreJugador() {
 		int contador = 0;
 		while (contador < this.nombre.length()) {
-			if (!Character.isLetter(this.nombre.charAt(contador))) {
-				System.out.println("Nombre invadilo.");
+			if (!Character.isLetter(this.nombre.charAt(contador)) && this.nombre.charAt(contador) != ' ') {
+				System.out.println("Nombre invalido.");
 				System.out.println("El nombre de los jugadores humanos no pueden contener numeros.");
 				return false;
 
@@ -77,13 +72,11 @@ public class Jugador {
 		return true;
 
 	}
-	
-	
-	
+
 	public String toString() {
 		return nombre + "[" + puntuacion + "]";
 	}
-	
+
 	/**
 	 * Metodo para imprimir la informacion de los jugadores.
 	 */
@@ -95,7 +88,7 @@ public class Jugador {
 	public void sumarPunto(int puntos) {
 		this.puntuacion += puntos;
 	}
-	
+
 	public int getPreguntasRespondidasCorrectas() {
 		return preguntasRespondidasCorrectas;
 	}
@@ -103,10 +96,11 @@ public class Jugador {
 	public void setPuntuacion(int puntuacion) {
 		this.puntuacion = puntuacion;
 	}
+
 	public void sumarPreguntaCorrecta(int correcto) {
-        this.preguntasRespondidasCorrectas += correcto ;
-    }
-	
+		this.preguntasRespondidasCorrectas += correcto;
+	}
+
 	public int getPuntuacion() {
 		return puntuacion;
 	}
@@ -114,6 +108,5 @@ public class Jugador {
 	public String getNombre() {
 		return nombre;
 	}
-
 
 }

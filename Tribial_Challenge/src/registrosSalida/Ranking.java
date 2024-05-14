@@ -49,19 +49,25 @@ public class Ranking {
 
 	public static void almacenarRaking() {
 	    // Acceder directamente a la lista de jugadores en Partida
-	    List<Jugador> jugadoresHumanos = Arrays.stream(Partida.jugadores)
-	            .filter(jugador -> !jugador.getNombre().startsWith("CPU"))
+		List<Jugador> jugadoresHumanos = new ArrayList<>();
+		
+		
+		if(Partida.jugadores != null) {
+	     jugadoresHumanos = Arrays.stream(Partida.jugadores)
+	            .filter(jugador -> jugador != null && !jugador.getNombre().startsWith("CPU"))
 	            .collect(Collectors.toList());
-
-	    // Ordenar la lista de jugadores filtrada
+		}
+	    // Ordena la lista de jugadores filtrada
 	    Collections.sort(jugadoresHumanos, (j1, j2) -> Integer.compare(j2.getPreguntasRespondidasCorrectas(),
 	            j1.getPreguntasRespondidasCorrectas()));
 
 	    List<String> lineasRanking = new ArrayList<>();
 	    lineasRanking.add("*** RANKING  *** ");
 	    for (Jugador jugador : jugadoresHumanos) {
+	    	if (jugador != null) {
 	        String jugadorRanking = jugador.getNombre() + " " + jugador.getPreguntasRespondidasCorrectas();
 	        lineasRanking.add(jugadorRanking);
+	    	}
 	    }
 	    
 	    Path rutaArchivoRanking = Paths.get(ConstantesRutas.ARCHIVO_RANKING);

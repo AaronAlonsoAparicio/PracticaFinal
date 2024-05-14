@@ -39,22 +39,45 @@ public class Tribial_Challenge {
 		System.out.println("¿Cuántos jugadores van a participar?");
 		int jugadoresHumanos = teclado.nextInt();
 
-		for (int numeroJugadores = 0; numeroJugadores < jugadoresHumanos; numeroJugadores++) {
-			System.out.println("Nombre del jugador" + (numeroJugadores + 1) + ": ");
-			String nombreJugador = teclado.next();
-			jugadoresPartida.add(new Jugador(nombreJugador));
-			
-		}
-
-		for (int jugadoresCpu = jugadoresPartida
-				.size(); jugadoresCpu < ConstantesJugador.MAX_JUGADORES; jugadoresCpu++) {
-			jugadoresPartida.add(new Jugador("CPU" + (jugadoresCpu - jugadoresHumanos + 1)));
-
-		}
-		LogJuego.salidaAcciones("Inicio de la partida " + jugadoresHumanos + " jugadores humanos, " + (ConstantesJugador.MAX_JUGADORES - jugadoresHumanos)+" jugadores CPU.");
+		crearJugadorHumano(jugadoresPartida, jugadoresHumanos);
 		
+		crearJugadoresCpu(jugadoresPartida, jugadoresHumanos);
+	
 		return jugadoresPartida;
 
+	}
+
+	private static void crearJugadoresCpu(ArrayList<Jugador> jugadoresPartida, int jugadoresHumanos) {
+		System.out.println("¿Cuantos jugadores CPU van a jugar?");
+		int jugadoresCpu = teclado.nextInt();
+		
+		int totalJugadores = jugadoresCpu + jugadoresHumanos;
+		 if (totalJugadores > ConstantesJugador.MAX_JUGADORES) {
+		        System.out.println("El número total de jugadores no puede exceder de " + ConstantesJugador.MAX_JUGADORES + ".");
+		        jugadoresCpu = ConstantesJugador.MAX_JUGADORES - jugadoresHumanos; 
+		        System.out.println("Se ajustará el número de jugadores CPU a " + jugadoresCpu + ".");
+		    }
+		 
+		 for (int numeroCpu = 0; numeroCpu < jugadoresCpu; numeroCpu++) {
+		        jugadoresPartida.add(new Jugador("CPU" + (numeroCpu + 1)));
+		    }
+	}
+
+	
+	private static void crearJugadorHumano(ArrayList<Jugador> jugadoresPartida, int jugadoresHumanos) {
+		for (int numeroJugadores = 0; numeroJugadores < jugadoresHumanos; numeroJugadores++) {
+			boolean nombreValido = false;
+			System.out.println("Nombre del jugador" + (numeroJugadores + 1) + ": ");
+			String nombreJugador = teclado.next();
+			do {
+			Jugador nuevoJugador = new Jugador(nombreJugador);
+			if(nuevoJugador != null && nuevoJugador.comprobarNombreJugador()) {
+			jugadoresPartida.add(new Jugador(nombreJugador));
+			nombreValido = true;
+			}
+			
+			}while (!nombreValido);
+		}
 	}
 
 	/**
@@ -65,8 +88,6 @@ public class Tribial_Challenge {
 	 */
 	private static void menuJugadores() throws IOException {
 		jugadores = new ArrayList<Jugador>();
-	
-
 		teclado = new Scanner(System.in);
 		System.out.println("Has seleccionado la opcion: Jugadores");
 		System.out.println("Que deseas hacer ahora:");
