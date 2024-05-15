@@ -17,6 +17,11 @@ public class PreguntaLengua {
 
 	static List<String> lineasDiccionario = null;
 
+	/**
+	 * Genera las preguntas de lengua
+	 * @return true si has acertado la pregunta,false en el caso contrario
+	 */
+	
 	static boolean lengua() {
 		System.out.println("PREGUNTA DE LENGUA");
 		System.out.print("Te damos esta palabra: ");
@@ -40,7 +45,7 @@ public class PreguntaLengua {
 	/**
 	 * Código que genera las preguntas de Lengua
 	 * 
-	 * @return
+	 * @return palabra que a la que se la va ocultar letras
 	 * 
 	 * @since 1.1
 	 */

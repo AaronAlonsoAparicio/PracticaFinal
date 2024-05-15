@@ -73,6 +73,21 @@ public class Jugador {
 
 	}
 
+	/**
+	 * Sumamos puntos en el caso de acertar pregunta
+	 * @param puntos
+	 */
+	public void sumarPunto(int puntos) {
+		this.puntuacion += puntos;
+	}
+	/**
+	 * Suma el numero de preguntas correctas que ha accertado el jugador
+	 * @param correcto suma el valor correcto.
+	 */
+	
+	public void sumarPreguntaCorrecta(int correcto) {
+		this.preguntasRespondidasCorrectas += correcto;
+	}
 	public String toString() {
 		return nombre + "[" + puntuacion + "]";
 	}
@@ -85,9 +100,6 @@ public class Jugador {
 		System.out.println(toString());
 	}
 
-	public void sumarPunto(int puntos) {
-		this.puntuacion += puntos;
-	}
 
 	public int getPreguntasRespondidasCorrectas() {
 		return preguntasRespondidasCorrectas;
@@ -97,9 +109,6 @@ public class Jugador {
 		this.puntuacion = puntuacion;
 	}
 
-	public void sumarPreguntaCorrecta(int correcto) {
-		this.preguntasRespondidasCorrectas += correcto;
-	}
 
 	public int getPuntuacion() {
 		return puntuacion;

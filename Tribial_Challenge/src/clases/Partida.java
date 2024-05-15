@@ -85,7 +85,13 @@ public class Partida {
 				for (Jugador jugador : jugadores) {
 					if (jugador != null && jugador.getNombre() != null) { 
 	                    System.out.println("Le toca al jugador " + jugador.getNombre());
-	                    boolean hasAcertado = preguntasFormuladas();
+	                    
+	                    boolean hasAcertado = false;
+	                    if (jugador.getNombre().startsWith("CPU")) {
+	                        hasAcertado = resolverPreguntaParaCPU();
+	                    } else {
+	                        hasAcertado = preguntasFormuladas();
+	                    }
 	                    if (hasAcertado) {
 	                        System.out.println("Has acertado, " + jugador.getNombre() + " enhorabuena sumas 1 punto");
 	                        jugador.sumarPunto(1);
@@ -105,27 +111,31 @@ public class Partida {
 				}
 			}
 
-			String registroPartida = "";
-			for (Jugador jugador : jugadores) {
-				// Con esto comprobamos que el jugador es humano por que no empieza por CPU
-				if (jugador!= null &&!jugador.getNombre().startsWith("CPU")) {
-					registroPartida += jugador.getNombre() + " " + jugador.getPuntuacion() + "\n";
-				}
-			}
-
-			registroPartida = registroPartida.trim();
-
-			if (!registroPartida.isEmpty()) {
-				LogJuego.salidaAcciones("Partida empezada");
-				Historico.almacenarInforamcionJugadores(registroPartida);
-				Ranking.almacenarRaking();
-				LogJuego.salidaAcciones("Partida terminada");
-			}
+			registrarEnArchivosSalida();
 
 			turnosPartida++;
 			
 
 		} while (turnosPartida > numeroTurnos);
+	}
+
+	private static void registrarEnArchivosSalida() {
+		String registroPartida = "";
+		for (Jugador jugador : jugadores) {
+			// Con esto comprobamos que el jugador es humano por que no empieza por CPU
+			if (jugador!= null &&!jugador.getNombre().startsWith("CPU")) {
+				registroPartida += jugador.getNombre() + " " + jugador.getPuntuacion() + "\n";
+			}
+		}
+
+		registroPartida = registroPartida.trim();
+
+		if (!registroPartida.isEmpty()) {
+			LogJuego.salidaAcciones("Partida empezada");
+			Historico.almacenarInforamcionJugadores(registroPartida);
+			Ranking.almacenarRaking();
+			LogJuego.salidaAcciones("Partida terminada");
+		}
 	}
 
 	/**
@@ -169,6 +179,11 @@ public class Partida {
 			break;
 		}
 		return hasAcertado;
+	}
+	
+	private static boolean resolverPreguntaParaCPU() {
+		// La CPU siempre acierta
+		return true;
 	}
 
 	/**

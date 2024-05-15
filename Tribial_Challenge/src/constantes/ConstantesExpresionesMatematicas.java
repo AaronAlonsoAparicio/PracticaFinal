@@ -7,7 +7,9 @@ package constantes;
 public class ConstantesExpresionesMatematicas {
 	
 	public static final String EXPRESION_MULTIPLICACION = "*";
+	
 	public static final String EXPRESION_RESTA = "-";
+	
 	public static final String EXPRESION_SUMA = "+";
 
 }
